@@ -1,0 +1,25 @@
+html {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+.main-wrapper {
+  max-width: 1670px;
+  margin: 0 auto;
+}
+.container {
+  background-color: #eb8950;
+  margin: 0 auto;
+  max-width: 1670px;
+  padding: 0 15px;
+}
+.navigation {
+  background-color: #1fb42c;
+}
+header {
+  background-color: #0606a7;
+}
+footer {
+  background-color: chocolate;
+}

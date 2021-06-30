@@ -1,0 +1,46 @@
+@import url(../variables.less);
+@font-face {
+    font-family: Lato_Light;
+    src: url(../../fonts/lato_light/lato_light.woff);
+  }
+
+html {
+    box-sizing: border-box;
+    font-family: Lato_Light;
+}
+
+body {
+    margin: 0;
+    font-size: 16px;
+}
+
+.main-wrapper {
+    max-width: @screen-max-width;
+    margin: 0 auto;
+}
+
+.container {
+    margin: 0 auto;
+    max-width: @screen-max-width;
+    padding: 0 15px;
+}
+
+.navigation {
+    background-color: @main-store-color;
+}
+
+
+.menu-sidebar {
+    top: 83px;
+    .p-sidebar-mask {
+        top: 83px;
+    }
+
+    &.header_fixed {
+        top: 65px;
+        .p-sidebar-mask {
+            top: 83px;
+        }
+    }
+}
+
