@@ -1,15 +1,22 @@
+import { reactive, ref } from "vue";
 import BackendRepositoryInterfase from "./BackendRepositoryInterfase";
 
 export default class BackendRepository implements BackendRepositoryInterfase {
-    public getHeaderData() {
-        const logoSrc = "https://via.placeholder.com/130x40";
-        const saleImgSrc = "https://via.placeholder.com/130x40";
-        const menuItems =`` 
 
-        return {
-            logoSrc,
-            saleImgSrc,
-            menuItems
+    url: string;
+
+    constructor() {
+        this.url = process.env.VUE_APP_BACKEND_URL;
+    }
+
+    public getHeaderData() {
+        const headerData = ref();
+
+        const getHeaderData = async () => {
+            const response = await fetch(`${this.url}/header`, { method: 'GET' })
+            headerData.value = await response.json();
         }
+
+        return { headerData, getHeaderData };
     }
 }

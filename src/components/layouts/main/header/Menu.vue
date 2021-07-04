@@ -54,7 +54,7 @@ export default defineComponent({
 <style scoped lang='less'>
 .burger_menu {
     button {
-        height: 40px;
+        height: 50px;
         width: 60px;
         i {
             font-size: 25px;

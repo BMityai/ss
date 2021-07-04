@@ -14,6 +14,6 @@ import '@/assets/css/style.less'
 createApp(App)
     .use(PrimeVue)
     .use(router)
-    .mount('#sun_store')
+    .mount('#gramarket')
 
 

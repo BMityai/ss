@@ -23,7 +23,5 @@ export default defineComponent({
 </script>
 
 <style scoped lang='less'>
-    .page.container {
-        height: 200vh;
-    }
+
 </style>

@@ -4,7 +4,7 @@
             <div class="header container">
                 <div class="header_items left_items">
                     <Menu v-bind:headerFixed="canFixHeader" />
-                    <Logo v-bind="{ logoUrl: logoSrc }" />
+                    <Logo v-bind="{ logoUrl: logo }" />
                 </div>
 
                 <div class="header_items center_items">
@@ -14,7 +14,7 @@
                 <div class="header_items right_items">
                     <Profile />
                     <Wishlist />
-                    <Sale v-bind="{ imgUrl: saleImgSrc }" />
+                    <Sale v-bind="{ imgUrl: salesIcon }" />
                 </div>
             </div>
         </div>
@@ -41,21 +41,15 @@ export default defineComponent({
         Wishlist,
         Sale,
     },
-    setup() {
-        // const logoSrc = "https://via.placeholder.com/130x40";
-        // const saleImgSrc = "https://via.placeholder.com/130x40";
-
-
+    async setup() {
         const service = new HeaderService();
 
         const { header, canFixHeader } = service.canFixHeader();
-        const { logoSrc, saleImgSrc, menuItems } = service.getHeaderData();
-
-
+        const headerData = await service.getHeaderData();
 
         return {
-            logoSrc,
-            saleImgSrc,
+            logo: headerData.value.logo,
+            salesIcon: headerData.value.salesLogo,
             header,
             canFixHeader,
         };

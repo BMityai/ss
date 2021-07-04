@@ -1,8 +1,14 @@
-import { onMounted, onUnmounted, Ref, ref } from "vue";
+import { onBeforeMount, onMounted, onUnmounted, reactive, Ref, ref } from "vue";
 import UseHeaderFixType from "@/app/Types/UseHeaderFixTypes";
 import BackendRepository from "@/app/Repositories/BackendRepository";
 
 export default class HeaderService {
+    url: string;
+
+    constructor() {
+        this.url = process.env.VUE_APP_BACKEND_URL;
+
+    }
     public canFixHeader(): UseHeaderFixType {
         const header = ref(null) as Ref;
         const canFixHeader = ref(false);
@@ -28,10 +34,11 @@ export default class HeaderService {
     /**
      * Get header data (menu items, logo, sale icon ...)
      */
-    public getHeaderData() {
-
+    public async getHeaderData() {
         const repository = new BackendRepository();
-        const headerData = repository.getHeaderData()
-        return headerData
+        const { headerData, getHeaderData } = repository.getHeaderData()
+        await getHeaderData();
+        
+        return headerData;
     }
 }
