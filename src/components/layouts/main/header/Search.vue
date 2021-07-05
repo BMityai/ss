@@ -1,7 +1,7 @@
 <template>
     <div class="p-input-icon-left search_field">
         <form action="#" method="GET" @submit.prevent="">
-            <InputText type="text" v-model="value1" placeholder="Поиск" />
+            <InputText type="text" placeholder="Поиск" />
             <Button class="pi pi-search h" type="submit" />
         </form>
     </div>
@@ -31,7 +31,8 @@ export default defineComponent({
     input {
         width: 100%;
         padding-right: 105px;
-        height: 40px;
+        height: 50px;
+        font-size: 18px;
     };
     button {
         position: absolute;
@@ -39,7 +40,7 @@ export default defineComponent({
         right: 0;
         height: 36px;
         box-shadow: unset;
-        height: 40px;
+        height: 50px;
         width: 100px;
     }
 }

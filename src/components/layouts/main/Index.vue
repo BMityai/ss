@@ -1,9 +1,15 @@
 <template>
     <Navigation />
-    <Header />
-    <HorizontalMenu />
+    <Suspense>
+        <Header />
+    </Suspense>
+
+    <Suspense>
+        <HorizontalMenu />
+    </Suspense>
+
     <div class="main-wrapper">
-        <slot name="pageContent"></slot>
+        <router-view class="main-wrapper" name="pageContent"></router-view>
     </div>
     <Footer />
 </template>
@@ -21,7 +27,7 @@ export default defineComponent({
         Header,
         Footer,
         Navigation,
-        HorizontalMenu
+        HorizontalMenu,
     },
     setup() {
         return {};

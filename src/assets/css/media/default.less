@@ -1,8 +1,9 @@
 @import url(../variables.less);
+
 @font-face {
     font-family: Lato_Light;
     src: url(../../fonts/lato_light/lato_light.woff);
-  }
+}
 
 html {
     box-sizing: border-box;
@@ -12,17 +13,33 @@ html {
 body {
     margin: 0;
     font-size: 16px;
+    overflow-x: hidden;
+
+    &.p-overflow-hidden {
+        #gramarket {
+            overflow-y: scroll;
+        }
+    }
+}
+
+#gramarket {
+    display: grid;
+    grid-template-rows: auto auto auto 1fr auto;
+    min-height: 100vh;
 }
 
 .main-wrapper {
     max-width: @screen-max-width;
     margin: 0 auto;
+    width: 100%;
 }
 
 .container {
     margin: 0 auto;
+    width: 100%;
     max-width: @screen-max-width;
-    padding: 0 15px;
+    padding-left: @container-padding;
+    padding-right: @container-padding;
 }
 
 .navigation {
@@ -31,16 +48,17 @@ body {
 
 
 .menu-sidebar {
-    top: 83px;
-    .p-sidebar-mask {
-        top: 83px;
-    }
+    top: 92px;
 
     &.header_fixed {
-        top: 65px;
-        .p-sidebar-mask {
-            top: 83px;
-        }
+        top: 73px;
     }
 }
 
+.p-sidebar-mask.p-component-overlay {
+    top: 92px;
+}
+
+.menu-sidebar.header_fixed+.p-sidebar-mask.p-component-overlay {
+    top: 73px;
+}

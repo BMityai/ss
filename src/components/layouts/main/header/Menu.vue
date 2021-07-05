@@ -3,7 +3,6 @@
         <Button
             @click="visibleLeft = !visibleLeft"
             class="p-mr-2"
-            :loading="isLoading"
         >
             <i
                 :class="{
@@ -17,13 +16,15 @@
             :class="{ header_fixed: headerFixed }"
             v-model:visible="visibleLeft"
         >
-            45654654654
+            <ul>
+                <li v-for="cat in menu" :key="cat.id"><router-link :to='cat.href'>{{cat.name}}</router-link></li>
+            </ul>
         </Sidebar>
     </div>
 </template>
 
 <script lang='ts'>
-import { defineComponent, ref } from "vue";
+import { defineComponent, reactive, ref } from "vue";
 import Sidebar from "primevue/sidebar";
 import Button from "primevue/button";
 
@@ -32,6 +33,9 @@ export default defineComponent({
     props: {
         headerFixed: {
             type: Boolean,
+        },
+        menuItems: {
+            type: Object,
         },
     },
     components: {
@@ -42,10 +46,12 @@ export default defineComponent({
     setup(props) {
         const visibleLeft = ref(false);
         const headerIsFixed = ref(props.headerFixed);
+        const menu = ref(props.menuItems);
         
         return {
             visibleLeft,
-            headerIsFixed
+            headerIsFixed,
+            menu
         };
     },
 });
@@ -54,7 +60,7 @@ export default defineComponent({
 <style scoped lang='less'>
 .burger_menu {
     button {
-        height: 40px;
+        height: 50px;
         width: 60px;
         i {
             font-size: 25px;

@@ -3,6 +3,12 @@ import UseHeaderFixType from "@/app/Types/UseHeaderFixTypes";
 import BackendRepository from "@/app/Repositories/BackendRepository";
 
 export default class HeaderService {
+    url: string;
+
+    constructor() {
+        this.url = process.env.VUE_APP_BACKEND_URL;
+
+    }
     public canFixHeader(): UseHeaderFixType {
         const header = ref(null) as Ref;
         const canFixHeader = ref(false);
@@ -13,7 +19,7 @@ export default class HeaderService {
         }
 
         // this will register the event when the component is mounted on the DOM
-        onMounted(function () {
+        onMounted(() => {
             window.addEventListener("scroll", handleScroll);
         });
 
@@ -28,10 +34,11 @@ export default class HeaderService {
     /**
      * Get header data (menu items, logo, sale icon ...)
      */
-    public getHeaderData() {
-
+    public async getHeaderData(): Promise<Ref> {
         const repository = new BackendRepository();
-        const headerData = repository.getHeaderData()
-        return headerData
+        const { headerData, getHeaderData } = repository.getHeaderData()
+        await getHeaderData();
+        
+        return headerData;
     }
 }

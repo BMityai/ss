@@ -13,7 +13,7 @@
     align-self: center;
     a {
         i {
-            font-size: 20px;
+            font-size: 30px;
             color: #3997f3;
         }
     }
