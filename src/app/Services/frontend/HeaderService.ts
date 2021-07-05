@@ -1,4 +1,4 @@
-import { onBeforeMount, onMounted, onUnmounted, reactive, Ref, ref } from "vue";
+import { onMounted, onUnmounted, Ref, ref } from "vue";
 import UseHeaderFixType from "@/app/Types/UseHeaderFixTypes";
 import BackendRepository from "@/app/Repositories/BackendRepository";
 
@@ -19,7 +19,7 @@ export default class HeaderService {
         }
 
         // this will register the event when the component is mounted on the DOM
-        onMounted(function () {
+        onMounted(() => {
             window.addEventListener("scroll", handleScroll);
         });
 
@@ -34,7 +34,7 @@ export default class HeaderService {
     /**
      * Get header data (menu items, logo, sale icon ...)
      */
-    public async getHeaderData() {
+    public async getHeaderData(): Promise<Ref> {
         const repository = new BackendRepository();
         const { headerData, getHeaderData } = repository.getHeaderData()
         await getHeaderData();

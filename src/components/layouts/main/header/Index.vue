@@ -3,7 +3,7 @@
         <div class="header-wrapper" :class="{ fixed: canFixHeader }">
             <div class="header container">
                 <div class="header_items left_items">
-                    <Menu v-bind:headerFixed="canFixHeader" />
+                    <Menu v-bind="{headerFixed:canFixHeader, menuItems:menu}"/>
                     <Logo v-bind="{ logoUrl: logo }" />
                 </div>
 
@@ -29,7 +29,7 @@ import Search from "@/components/layouts/main/header/Search.vue";
 import Profile from "@/components/layouts/main/header/Profile.vue";
 import Wishlist from "@/components/layouts/main/header/Wishlist.vue";
 import Sale from "@/components/layouts/main/header/Sale.vue";
-import HeaderService from "@/app/Services/HeaderService";
+import HeaderService from "@/app/Services/frontend/HeaderService";
 
 export default defineComponent({
     name: "Header",
@@ -50,6 +50,7 @@ export default defineComponent({
         return {
             logo: headerData.value.logo,
             salesIcon: headerData.value.salesLogo,
+            menu: headerData.value.menu,
             header,
             canFixHeader,
         };
@@ -62,15 +63,19 @@ header {
     .header-wrapper {
         -webkit-box-shadow: 0px 5px 10px 0px rgba(142, 142, 142, 0.2);
         box-shadow: 0px 5px 10px 0px rgba(142, 142, 142, 0.2);
+            z-index: 10;
+
+        
         &.fixed {
             position: fixed;
             top: 0;
             margin: 0 auto;
             width: 100%;
             background: #fff;
+            
         }
     }
-    min-height: 90px;
+    min-height: 73px;
 }
 .header {
     display: flex;

@@ -1,7 +1,7 @@
 <template>
     <div class="p-input-icon-left search_field">
         <form action="#" method="GET" @submit.prevent="">
-            <InputText type="text" v-model="value1" placeholder="Поиск" />
+            <InputText type="text" placeholder="Поиск" />
             <Button class="pi pi-search h" type="submit" />
         </form>
     </div>

@@ -4,9 +4,12 @@
         <Header />
     </Suspense>
 
-    <HorizontalMenu />
+    <Suspense>
+        <HorizontalMenu />
+    </Suspense>
+
     <div class="main-wrapper">
-        <slot name="pageContent"></slot>
+        <router-view class="main-wrapper" name="pageContent"></router-view>
     </div>
     <Footer />
 </template>
