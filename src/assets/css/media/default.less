@@ -14,7 +14,7 @@ body {
     margin: 0;
     font-size: 16px;
     overflow-x: hidden;
-
+    color: @font-color;
     &.p-overflow-hidden {
         #gramarket {
             overflow-y: scroll;
@@ -48,10 +48,18 @@ body {
 
 
 .menu-sidebar {
+    transition: all 0.1s linear;
     top: 92px;
-
+    .p-sidebar-content {
+        display: flex;
+        height: 100%;
+    }
     &.header_fixed {
         top: 73px;
+    }
+    &.child-level-visible {
+        width: 90%;
+        max-width: 1200px;
     }
 }
 

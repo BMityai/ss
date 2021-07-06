@@ -5,7 +5,7 @@
                 :slides-per-view="1"
                 :space-between="0"
                 navigation
-                :autoplay="{ delay: 2000, autoplayDisableOnInteraction: flase }"
+                :autoplay="{ delay: 2000, autoplayDisableOnInteraction: false }"
                 :pagination="{ clickable: true }"
                 :loop="true"
                 @swiper="onSwiper"
