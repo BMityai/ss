@@ -4,11 +4,6 @@
     </div>
 </template>
 
-<style scoped lang='less'>
-.horizontal_menu {
-    // background: fuchsia;
-}
-</style>
 
 <script lang='ts'>
 import { defineComponent } from 'vue'

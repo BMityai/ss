@@ -29,10 +29,3 @@ export default defineComponent({
     },
 });
 </script>
-
-<style scoped lang='less'>
-.logo {
-    width: 100%;
-    text-align: center;
-}
-</style>

@@ -3,7 +3,9 @@
         <div class="header-wrapper" :class="{ fixed: canFixHeader }">
             <div class="header container">
                 <div class="header_items left_items">
-                    <Menu v-bind="{headerFixed:canFixHeader, menuItems:menu}"/>
+                    <Menu
+                        v-bind="{ headerFixed: canFixHeader, menuItems: menu }"
+                    />
                     <Logo v-bind="{ logoUrl: logo }" />
                 </div>
 
@@ -58,42 +60,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang='less'>
-header {
-    .header-wrapper {
-        -webkit-box-shadow: 0px 5px 10px 0px rgba(142, 142, 142, 0.2);
-        box-shadow: 0px 5px 10px 0px rgba(142, 142, 142, 0.2);
-            z-index: 10;
-
-        
-        &.fixed {
-            position: fixed;
-            top: 0;
-            margin: 0 auto;
-            width: 100%;
-            background: #fff;
-            
-        }
-    }
-    min-height: 73px;
-}
-.header {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 15px;
-
-    .header_items {
-        display: flex;
-        &.center_items {
-            width: 60%;
-        }
-        &.left_items,
-        &.right_items {
-            display: flex;
-            justify-content: space-between;
-            width: 20%;
-        }
-    }
-}
-</style>
 
