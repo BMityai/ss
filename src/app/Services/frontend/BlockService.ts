@@ -1,4 +1,4 @@
-import BackendRepository from "../../Repositories/BackendRepository";
+import BackendRepository from "../../Repositories/HomePage/HomePageRepository";
 
 export default class BlockService {
     

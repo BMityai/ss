@@ -1,4 +1,4 @@
-export default class Repository{
+export default class BackendRepositoryClient{
 
     baseUrl: string;
 
