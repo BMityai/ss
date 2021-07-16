@@ -1,9 +1,10 @@
-export default class BackendRepositoryClient{
+export default class BackendRepositoryClient {
 
     baseUrl: string;
+    version = 'v1';
 
     constructor() {
-        this.baseUrl = process.env.VUE_APP_BACKEND_URL;
+        this.baseUrl = process.env.VUE_APP_BACKEND_URL + this.version;
     }
 
     public async fetch(path: string, method: string): Promise<JSON> {

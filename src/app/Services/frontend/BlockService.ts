@@ -1,30 +1,31 @@
 import BackendRepository from "../../Repositories/HomePage/HomePageRepository";
 
 export default class BlockService {
-    
-    /**
-     * Get first block images
-     */
-    public async getFirstBlockContent() {
-        const repository = new BackendRepository();
-        
-        const { firstBlockImages, getFirstBlockImages } = repository.getFirstBlockImages();
 
-        await getFirstBlockImages()
+    backendRepository: BackendRepository;
 
-        return firstBlockImages;
+    constructor() {
+        this.backendRepository = new BackendRepository();
     }
 
     /**
-     * Get first block images
+     * Get first block content
+     */
+    public async getFirstBlockContent() {
+        return await this.backendRepository.getHomePageBlocksContent('first_block');
+    }
+
+    /**
+     * Get second block content
      */
     public async getSecondBlockContent() {
-        const repository = new BackendRepository();
-        
-        const { secondBlockImages, getSeconfBlockImages } = repository.getSecondBlockContent();
+        return await this.backendRepository.getHomePageBlocksContent('second_block');
+    }
 
-        await getSeconfBlockImages()
-
-        return secondBlockImages;
+    /**
+     * Get third block content
+     */
+    public async getThirdBlockContent() {
+        return await this.backendRepository.getHomePageBlocksContent('third_block');
     }
 }

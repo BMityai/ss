@@ -34,11 +34,8 @@ export default class HeaderService {
     /**
      * Get header data (menu items, logo, sale icon ...)
      */
-    public async getHeaderData(): Promise<Ref> {
+    public async getHeaderData() {
         const repository = new BackendRepository();
-        const { headerData, getHeaderData } = repository.getHeaderData()
-        await getHeaderData();
-        
-        return headerData;
+        return await repository.getHeaderData()        
     }
 }

@@ -3,7 +3,6 @@ import App from './App.vue'
 import router from './router'
 import PrimeVue from 'primevue/config'
 import $ from 'jquery'
-import VueHtmlJs from 'vue-html-js';
 
 
 import 'primevue/resources/themes/saga-blue/theme.css'
@@ -17,7 +16,6 @@ import '@/assets/css/style.less'
 createApp(App)
     .use(PrimeVue)
     .use($)
-    .use(VueHtmlJs)
     .use(router)
     .mount('#gramarket')
 

@@ -1,6 +1,3 @@
-import GetFirstBlockImagesType from "@/app/Types/GetFirstBlockImagesType";
-import { ref } from "vue";
-import GetHeaderDataType from "../../Types/GetHederDataType";
 import BackendRepositoryClient from "../BackendRepositoryClient";
 import BackendRepository from "../BackendRepositoryClient";
 import HomePageRepositoryInterface from "./HomePageRepositoryInterface";
@@ -18,43 +15,15 @@ export default class HomePageRepository implements HomePageRepositoryInterface {
     /**
      * Get header data (menu)
      */
-    public getHeaderData(): GetHeaderDataType {
-        const headerData = ref();
-
-        const getHeaderData = async () => {
-            headerData.value = await this.client.fetch('header', 'GET');
-        };
-
-        return { headerData, getHeaderData };
+    public async getHeaderData() {
+        return await this.client.fetch('header', 'GET');
     }
 
-    public getFirstBlockImages(): GetFirstBlockImagesType {
-        const firstBlockImages = ref();
+    /**
+     * Get home page blocks content 
+     */
+    public async getHomePageBlocksContent(blockName: 'horizontal_menu' | 'first_block' | 'second_block' | 'third_block') {
+        return await this.client.fetch(`${this.getContentBlocksUrl}${blockName}`, 'GET');
 
-        const getFirstBlockImages = async () => {
-            firstBlockImages.value = await this.client.fetch(`${this.getContentBlocksUrl}first_block`, 'GET');
-        }
-
-        return { firstBlockImages, getFirstBlockImages }
-    }
-
-    public getSecondBlockContent() {
-        const secondBlockImages = ref();
-
-        const getSeconfBlockImages = async () => {
-            secondBlockImages.value = await this.client.fetch(`${this.getContentBlocksUrl}second_block`, 'GET');
-        }
-
-        return { secondBlockImages, getSeconfBlockImages }
-    }
-
-    public getHorizontalMenu() {
-        const horizontalMenu = ref();
-
-        const getHorizontalMenu = async () => {
-            horizontalMenu.value = await this.client.fetch(`${this.getContentBlocksUrl}horizontal_menu`, 'GET');
-        }
-
-        return { horizontalMenu, getHorizontalMenu };
     }
 }

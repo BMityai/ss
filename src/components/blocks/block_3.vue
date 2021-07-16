@@ -17,19 +17,29 @@
         <ProductCard />
         <ProductCard />
         <ProductCard />
+        <div class="product-item flex-empty"></div>
+        <div class="product-item flex-empty"></div>
+        <div class="product-item flex-empty"></div>
+        <div class="product-item flex-empty"></div>
+        <div class="product-item flex-empty"></div>
     </div>
 </template>
 
 <script lang='ts'>
 import { defineComponent } from "vue";
 import ProductCard from '@/components/layouts/product_card/Index.vue';
+import BlockService from "@/app/Services/frontend/BlockService";
 
 export default defineComponent({
     components: {
         ProductCard,
     },
-    setup() {
-        return {};
+    async setup() {
+
+        const service = new BlockService();
+        const topProducts = await service.getThirdBlockContent();
+
+        return { topProducts };
     },
 });
 </script>
@@ -39,5 +49,12 @@ export default defineComponent({
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    .product-item.flex-empty {
+        width: ~'calc(100% / 5 - 70px)';
+        min-width: 240px;
+        padding: 5px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+    }
 }
 </style>

@@ -50,9 +50,9 @@ export default defineComponent({
         const headerData = await service.getHeaderData();
 
         return {
-            logo: headerData.value.logo,
-            salesIcon: headerData.value.salesLogo,
-            menu: headerData.value.menu,
+            logo: headerData.logo,
+            salesIcon: headerData.salesLogo,
+            menu: headerData.menu,
             header,
             canFixHeader,
         };
