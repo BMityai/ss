@@ -27,17 +27,26 @@
 
 <script lang='ts'>
 import { defineComponent } from "vue";
-import ProductCard from '@/components/layouts/product_card/Index.vue';
+import ProductCard from "@/components/layouts/product_card/Index.vue";
 import BlockService from "@/app/Services/frontend/BlockService";
 
 export default defineComponent({
     components: {
         ProductCard,
     },
-    async setup() {
-
+    props: {
+        area: {
+            type: String,
+            default: "home_page",
+        },
+        id: {
+            type: Number,
+            default: null,
+        },
+    },
+    async setup(props) {
         const service = new BlockService();
-        const topProducts = await service.getThirdBlockContent();
+        const topProducts = await service.getThirdBlockContent(props.area, props.id);
 
         return { topProducts };
     },
@@ -50,7 +59,7 @@ export default defineComponent({
     flex-wrap: wrap;
     justify-content: space-between;
     .product-item.flex-empty {
-        width: ~'calc(100% / 5 - 70px)';
+        width: ~"calc(100% / 5 - 70px)";
         min-width: 240px;
         padding: 5px;
         margin-bottom: 20px;

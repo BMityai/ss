@@ -8,20 +8,19 @@
                 :autoplay="{ delay: 2000, autoplayDisableOnInteraction: false }"
                 :pagination="{ clickable: true }"
                 :loop="true"
-                @swiper="onSwiper"
-                @slideChange="onSlideChange"
             >
-
-                <swiper-slide v-for="image in images" :key="image.id" >
-                    <router-link :to="image.href">
-                        <img
-                            :src="image.src"
-                            alt=""
-                        />
+                <swiper-slide
+                    v-for="item in firstBlock"
+                    :key="item.id"
+                    :data-content-id="item.id"
+                    :data-block="item.block"
+                    :data-block-id="item.blockId"
+                    :data-area="item.area"
+                >
+                    <router-link :to="item.url">
+                        <img :src="item.image" alt="" />
                     </router-link>
                 </swiper-slide>
-
-               
             </swiper>
         </div>
     </div>
@@ -64,12 +63,25 @@ export default defineComponent({
         Swiper,
         SwiperSlide,
     },
-    async setup() {
+    props: {
+        area: {
+            type: String,
+            default: "home_page",
+        },
+        id: {
+            type: Number,
+            default: null,
+        },
+    },
+    async setup(props) {
         const service = new BlockService();
 
-        const images = await service.getFirstBlockContent();
+        const firstBlock = await service.getFirstBlockContent(
+            props.area,
+            props.id
+        );
 
-        return { images };
+        return { firstBlock };
     },
 });
 </script>

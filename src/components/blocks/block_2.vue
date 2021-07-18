@@ -9,10 +9,20 @@ import { defineComponent } from "vue";
 import BlockService from "@/app/Services/frontend/BlockService";
 
 export default defineComponent({
-    async setup() {
+    props: {
+        area: {
+            type: String,
+            default: 'home_page'
+        },
+        id: {
+            type: Number,
+            default: null
+        }
+    },
+    async setup(props) {
         const service = new BlockService();
 
-        const secondBlockContent = await service.getSecondBlockContent();
+        const secondBlockContent = await service.getSecondBlockContent(props.area, props.id);
         return { secondBlockContent };
     },
 });

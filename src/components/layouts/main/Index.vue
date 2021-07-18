@@ -9,7 +9,11 @@
     </Suspense>
 
     <div class="main-wrapper">
-        <router-view class="main-wrapper" name="pageContent"></router-view>
+        <router-view  name="pageContent">
+
+            
+
+        </router-view>
     </div>
     <Footer />
 </template>

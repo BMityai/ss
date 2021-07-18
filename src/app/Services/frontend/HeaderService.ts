@@ -3,12 +3,7 @@ import UseHeaderFixType from "@/app/Types/UseHeaderFixTypes";
 import BackendRepository from "@/app/Repositories/HomePage/HomePageRepository";
 
 export default class HeaderService {
-    url: string;
 
-    constructor() {
-        this.url = process.env.VUE_APP_BACKEND_URL;
-
-    }
     public canFixHeader(): UseHeaderFixType {
         const header = ref(null) as Ref;
         const canFixHeader = ref(false);

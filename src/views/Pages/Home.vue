@@ -1,14 +1,17 @@
 <template>
     <div class="page container">
         <Suspense>
-            <Block1 />
+            <Block1 :area="home_page"/>
         </Suspense>
+
         <Suspense>
-            <Block2 />
+            <Block2 :area="home_page"/>
         </Suspense>
+
         <Suspense>
-            <Block3 />
+            <Block3 :area="home_page"/>
         </Suspense>
+
     </div>
 </template>
 

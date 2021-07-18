@@ -22,8 +22,8 @@ export default class HomePageRepository implements HomePageRepositoryInterface {
     /**
      * Get home page blocks content 
      */
-    public async getHomePageBlocksContent(blockName: 'horizontal_menu' | 'first_block' | 'second_block' | 'third_block') {
-        return await this.client.fetch(`${this.getContentBlocksUrl}${blockName}`, 'GET');
+    public async getHomePageBlocksContent(blockName: 'horizontal_menu' | 'first_block' | 'second_block' | 'third_block', area: string, id: number | null = null) {
+        return await this.client.fetch(`${this.getContentBlocksUrl}${blockName}`, 'GET', {area: area, id: id});
 
     }
 }

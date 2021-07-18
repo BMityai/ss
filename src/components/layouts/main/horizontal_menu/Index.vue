@@ -1,20 +1,62 @@
 <template>
     <div class="horizontal_menu">
-        <div v-html="horizontalMenuContent.content" class="container"/>
+        <ul class="horizontal_menu-wrapper">
+            <li
+                v-for="menuItem in horizontalMenuContent"
+                :key="menuItem.id"
+                class="menu-item"
+                :data-content-id="menuItem.id"
+                :data-block="menuItem.block"
+                :data-block-id="menuItem.blockId"
+                :data-area="menuItem.area"
+            >
+                <router-link :to="menuItem.url" class="item-link">
+                    <span class="block2-item-name">{{ menuItem.text }}</span>
+                </router-link>
+            </li>
+        </ul>
+        <div v-html="horizontalMenuContent.content" class="container" />
     </div>
 </template>
 
 
 <script lang='ts'>
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue";
 
-import HorizontalMenuService from '@/app/Services/frontend/HorizontalMenuService'
+import HorizontalMenuService from "@/app/Services/frontend/HorizontalMenuService";
 
 export default defineComponent({
-    async setup() {
-        const service = new HorizontalMenuService();
-        const horizontalMenuContent = await service.getHorizontalMenu();
-        return { horizontalMenuContent }
+    props: {
+        area: {
+            type: String,
+            default: "home_page",
+        },
+        id: {
+            type: Number,
+            default: null,
+        },
     },
-})
+    async setup(props) {
+        const service = new HorizontalMenuService();
+        const horizontalMenuContent = await service.getHorizontalMenu(
+            props.area,
+            props.id
+        );
+        return { horizontalMenuContent };
+    },
+});
 </script>
+
+<style scoped lang='less'>
+.horizontal_menu-wrapper {
+    display: flex;
+    .menu-item {
+        list-style-type: none;
+        margin-right: 20px;
+        .item-link {
+            color: #000;
+            text-decoration: unset;
+        }
+    }
+}
+</style>

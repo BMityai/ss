@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import Home from '@/views/Pages/Home.vue'
 import MainLayout from '@/components/layouts/main/Index.vue'
+
 const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
@@ -14,9 +15,6 @@ const routes: Array<RouteRecordRaw> = [
             }
         ]
     },
-
-   
-
 ]
 
 const router = createRouter({
