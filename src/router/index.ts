@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import Home from '@/views/Pages/Home.vue'
+import Home from '@/views/Pages/Home/Index.vue'
 import CustomPage from '@/views/Pages/CustomPage.vue'
 import MainLayout from '@/components/layouts/main/Index.vue'
 

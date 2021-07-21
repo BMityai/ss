@@ -1,17 +1,21 @@
 <template>
     <div class="page container">
         <Suspense>
-            <Block1 v-bind="{pageType:'home_page'}" />
+            <template #default>
+                <Block1 v-bind="{ pageType: 'home_page' }" />
+            </template>
+            <template #fallback> 
+                <Skeleton class="header_skeleton" width="100%" />
+            </template>
         </Suspense>
 
         <Suspense>
-            <Block2 v-bind="{pageType:'home_page'}" />
+            <Block2 v-bind="{ pageType: 'home_page' }" />
         </Suspense>
 
         <Suspense>
-            <Block3 v-bind="{pageType:'home_page'}" />
+            <Block3 v-bind="{ pageType: 'home_page' }" />
         </Suspense>
-
     </div>
 </template>
 
@@ -20,16 +24,18 @@ import { defineComponent } from "vue";
 import Block1 from "@/components/blocks/block_1.vue";
 import Block2 from "@/components/blocks/block_2.vue";
 import Block3 from "@/components/blocks/block_3.vue";
+import Skeleton from 'primevue/skeleton';
+
 
 export default defineComponent({
     components: {
         Block1, // first block (swiper)
         Block2, // second block
         Block3, // third block
+        Skeleton // skeleton
     },
     // setup() {
     //     return {};
     // },
 });
 </script>
-
