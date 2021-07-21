@@ -27,7 +27,7 @@ import HorizontalMenuService from "@/app/Services/frontend/HorizontalMenuService
 
 export default defineComponent({
     props: {
-        area: {
+        pageType: {
             type: String,
             default: "home_page",
         },
@@ -39,7 +39,7 @@ export default defineComponent({
     async setup(props) {
         const service = new HorizontalMenuService();
         const horizontalMenuContent = await service.getHorizontalMenu(
-            props.area,
+            props.pageType,
             props.id
         );
         return { horizontalMenuContent };

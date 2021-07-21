@@ -30,7 +30,7 @@
                     :key="firstLevelCategory.id"
                     :class="{ active: activeFirstLevelCategoryId == firstLevelCategory.id }"
                 >
-                    <router-link :to="firstLevelCategory.href">
+                    <router-link :to="firstLevelCategory.href" @click="visibleLeft = !visibleLeft">
                         <img :src="firstLevelCategory.thumbnail" alt="" />
                         <span> {{ firstLevelCategory.name }}</span>
                     </router-link>
@@ -48,7 +48,7 @@
                         v-for="cat in activeChildCategories"
                         :key="cat.id"
                     >
-                        <router-link :to="cat.href">
+                        <router-link :to="cat.href" @click="visibleLeft = !visibleLeft">
                             <span> {{ cat.name }}</span>
                         </router-link>
 
@@ -59,7 +59,7 @@
                                 v-for="thirdCat in cat.children"
                                 :key="thirdCat.id"
                             >
-                                <router-link :to="thirdCat.href">
+                                <router-link :to="thirdCat.href" @click="visibleLeft = !visibleLeft">
                                     <span> {{ thirdCat.name }}</span>
                                 </router-link>
                             </li>

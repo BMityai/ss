@@ -1,15 +1,15 @@
 <template>
     <div class="page container">
         <Suspense>
-            <Block1 :area="home_page"/>
+            <Block1 v-bind="{pageType:'home_page'}" />
         </Suspense>
 
         <Suspense>
-            <Block2 :area="home_page"/>
+            <Block2 v-bind="{pageType:'home_page'}" />
         </Suspense>
 
         <Suspense>
-            <Block3 :area="home_page"/>
+            <Block3 v-bind="{pageType:'home_page'}" />
         </Suspense>
 
     </div>

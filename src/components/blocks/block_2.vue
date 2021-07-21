@@ -10,7 +10,7 @@ import BlockService from "@/app/Services/frontend/BlockService";
 
 export default defineComponent({
     props: {
-        area: {
+        pageType: {
             type: String,
             default: 'home_page'
         },
@@ -22,7 +22,7 @@ export default defineComponent({
     async setup(props) {
         const service = new BlockService();
 
-        const secondBlockContent = await service.getSecondBlockContent(props.area, props.id);
+        const secondBlockContent = await service.getSecondBlockContent(props.pageType, props.id);
         return { secondBlockContent };
     },
 });

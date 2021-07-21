@@ -10,14 +10,11 @@
     src: url(../../fonts/Comfortaa/Comfortaa-Regular.woff);
 }
 
-// @font-face {
-//     font-family: Comfortaa;
-//     src: url(../../fonts/Fedra_Sans/FedraSansPro-Normal.woff);
-// }
 
 html {
     box-sizing: border-box;
     font-family: Comfortaa;
+    height: 100%;
 }
 
 body {
@@ -25,6 +22,7 @@ body {
     font-size: 16px;
     overflow-x: hidden;
     color: @font-color;
+    height: 100%;
 
     &.p-overflow-hidden {
         #gramarket {
@@ -40,12 +38,17 @@ body {
     // display: grid;
     // grid-template-rows: auto auto auto 1fr auto;
     // min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .main-wrapper {
     max-width: @screen-max-width;
     margin: 0 auto;
     width: 100%;
+    flex: 1 0 auto;
+
 }
 
 .container {
@@ -63,6 +66,8 @@ body {
 // HEADER
 header {
     min-height: 73px;
+    flex: 0 0 auto;
+
 
     .header-wrapper {
         -webkit-box-shadow: 0px 5px 10px 0px rgba(142, 142, 142, 0.2);
@@ -245,4 +250,8 @@ header {
 
 .menu-sidebar.header_fixed+.p-sidebar-mask.p-component-overlay {
     top: 73px;
+}
+
+footer {
+    flex: 0 0 auto;
 }

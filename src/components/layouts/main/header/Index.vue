@@ -6,7 +6,7 @@
                     <Menu
                         v-bind="{ headerFixed: canFixHeader, menuItems: menu }"
                     />
-                    <Logo v-bind="{ logoUrl: logo }" />
+                    <Logo v-bind="{ image: logo.image, url: logo.url, blockId: logo.blockId }" />
                 </div>
 
                 <div class="header_items center_items">

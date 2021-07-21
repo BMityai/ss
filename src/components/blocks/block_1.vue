@@ -64,7 +64,7 @@ export default defineComponent({
         SwiperSlide,
     },
     props: {
-        area: {
+        pageType: {
             type: String,
             default: "home_page",
         },
@@ -77,7 +77,7 @@ export default defineComponent({
         const service = new BlockService();
 
         const firstBlock = await service.getFirstBlockContent(
-            props.area,
+            props.pageType,
             props.id
         );
 

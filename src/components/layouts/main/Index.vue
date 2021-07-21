@@ -11,8 +11,6 @@
     <div class="main-wrapper">
         <router-view  name="pageContent">
 
-            
-
         </router-view>
     </div>
     <Footer />

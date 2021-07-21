@@ -11,21 +11,21 @@ export default class BlockService {
     /**
      * Get first block content
      */
-    public async getFirstBlockContent(area: string, id: number | null) {
-        return await this.backendRepository.getHomePageBlocksContent('first_block', area, id);
+    public async getFirstBlockContent(pageType: string, id: number | null) {
+        return await this.backendRepository.getHomePageBlocksContent('first_block', pageType, id);
     }
 
     /**
      * Get second block content
      */
-    public async getSecondBlockContent(area: string, id: number | null) {
-        return await this.backendRepository.getHomePageBlocksContent('second_block', area, id);
+    public async getSecondBlockContent(pageType: string, id: number | null) {
+        return await this.backendRepository.getHomePageBlocksContent('second_block', pageType, id);
     }
 
     /**
      * Get third block content
      */
-    public async getThirdBlockContent(area: string, id: number | null) {
-        return await this.backendRepository.getHomePageBlocksContent('third_block', area, id);
+    public async getThirdBlockContent(pageType: string, id: number | null) {
+        return await this.backendRepository.getHomePageBlocksContent('third_block', pageType, id);
     }
 }

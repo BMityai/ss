@@ -35,7 +35,7 @@ export default defineComponent({
         ProductCard,
     },
     props: {
-        area: {
+        pageType: {
             type: String,
             default: "home_page",
         },
@@ -46,7 +46,7 @@ export default defineComponent({
     },
     async setup(props) {
         const service = new BlockService();
-        const topProducts = await service.getThirdBlockContent(props.area, props.id);
+        const topProducts = await service.getThirdBlockContent(props.pageType, props.id);
 
         return { topProducts };
     },

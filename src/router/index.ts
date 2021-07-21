@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import Home from '@/views/Pages/Home.vue'
+import CustomPage from '@/views/Pages/CustomPage.vue'
 import MainLayout from '@/components/layouts/main/Index.vue'
 
 const routes: Array<RouteRecordRaw> = [
@@ -7,14 +8,21 @@ const routes: Array<RouteRecordRaw> = [
         path: '/',
         name: 'mainLayout', // Header and Footer
         component: MainLayout,
-        children:[
+        children: [
             {
-                path:'',
+                path: '',
                 name: 'Home',
-                components: {pageContent:Home} // Home Page
-            }
-        ]
+                components: { pageContent: Home } // Home Page
+            },
+            {
+                path: '/:pathMatch(.*)*',
+                name: 'CustomPage',
+                components: { pageContent: CustomPage }
+            },
+        ],
+
     },
+
 ]
 
 const router = createRouter({
