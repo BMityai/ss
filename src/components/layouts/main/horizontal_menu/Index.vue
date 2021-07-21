@@ -46,17 +46,3 @@ export default defineComponent({
     },
 });
 </script>
-
-<style scoped lang='less'>
-.horizontal_menu-wrapper {
-    display: flex;
-    .menu-item {
-        list-style-type: none;
-        margin-right: 20px;
-        .item-link {
-            color: #000;
-            text-decoration: unset;
-        }
-    }
-}
-</style>

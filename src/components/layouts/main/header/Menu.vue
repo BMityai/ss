@@ -74,7 +74,7 @@
 </template>
 
 <script lang='ts'>
-import { defineComponent, reactive, ref, watch } from "vue";
+import { defineComponent, ref, watch } from "vue";
 import Sidebar from "primevue/sidebar";
 import Button from "primevue/button";
 
@@ -124,10 +124,3 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang='less'>
-@import url("../../../../assets/css/variables.less");
-
-
-
-
-</style>

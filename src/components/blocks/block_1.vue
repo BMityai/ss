@@ -87,18 +87,6 @@ export default defineComponent({
 </script>
 
 <style scoped lang='less'>
-@import url("../../assets/css/variables.less");
 
-.first_block {
-    width: 100vw;
-    margin-left: ~"calc(-50vw + 50%)";
-    // margin-right: ~"calc(-2 * @{container-padding})";
-    .swiper-container {
-        .swiper-wrapper {
-            .swiper-slide img {
-                width: 100%;
-            }
-        }
-    }
-}
+
 </style>

@@ -16,7 +16,7 @@
                 <div class="header_items right_items">
                     <Profile />
                     <Wishlist />
-                    <Sale v-bind="{ imgUrl: salesIcon }" />
+                    <Sale v-bind="{ image: salesIcon.image, url: salesIcon.url, blockId: salesIcon.blockId }" />
                 </div>
             </div>
         </div>

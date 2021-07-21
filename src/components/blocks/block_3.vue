@@ -1,27 +1,29 @@
 <template>
-    <div class="product_list">
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <div class="product-item flex-empty"></div>
-        <div class="product-item flex-empty"></div>
-        <div class="product-item flex-empty"></div>
-        <div class="product-item flex-empty"></div>
-        <div class="product-item flex-empty"></div>
+    <div class="third_block">
+        <div class="product_list">
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <div class="product-item flex-empty"></div>
+            <div class="product-item flex-empty"></div>
+            <div class="product-item flex-empty"></div>
+            <div class="product-item flex-empty"></div>
+            <div class="product-item flex-empty"></div>
+        </div>
     </div>
 </template>
 
@@ -46,7 +48,10 @@ export default defineComponent({
     },
     async setup(props) {
         const service = new BlockService();
-        const topProducts = await service.getThirdBlockContent(props.pageType, props.id);
+        const topProducts = await service.getThirdBlockContent(
+            props.pageType,
+            props.id
+        );
 
         return { topProducts };
     },
@@ -54,16 +59,4 @@ export default defineComponent({
 </script>
 
 <style scoped lang='less'>
-.product_list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    .product-item.flex-empty {
-        width: ~"calc(100% / 5 - 70px)";
-        min-width: 240px;
-        padding: 5px;
-        margin-bottom: 20px;
-        border-radius: 5px;
-    }
-}
 </style>

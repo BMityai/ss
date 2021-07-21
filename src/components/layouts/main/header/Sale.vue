@@ -1,9 +1,8 @@
 <template>
-
-    <div class="sales">
-        <a href="#">
-            <img v-bind:src="img" alt="" />
-        </a>
+    <div class="sales" :data-block-id="logoBlockId">
+        <router-link :to="logoUrl" >
+            <img v-bind:src="logoImage" alt="" />
+        </router-link>
     </div>
 </template>
 
@@ -14,18 +13,29 @@ export default defineComponent({
     name: "Sales",
 
     props: {
-        imgUrl: {
+        image: {
             type: String,
             default: "",
+        },
+        url: {
+            type: String,
+            default: "/",
+        },
+        blockId: {
+            type: String,
         },
     },
 
     setup(props) {
         const visibleTop = ref(false);
-        const img = ref(props.imgUrl);
+        const logoImage = ref(props.image);
+        const logoUrl = ref(props.url);
+        const logoBlockId = ref(props.blockId);
         return {
             visibleTop,
-            img,
+            logoImage,
+            logoUrl,
+            logoBlockId,
         };
     },
 });
