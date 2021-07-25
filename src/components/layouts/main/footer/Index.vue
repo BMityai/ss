@@ -1,7 +1,10 @@
 <template>
     <footer>
         <div class="container">
-            FOOTER
+            <div class="header"></div>
+            <div class="footer_items">
+                
+            </div>
         </div>
     </footer>
 </template>

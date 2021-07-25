@@ -2,10 +2,11 @@
     <div class="first_block">
         <div class="full_width_banner">
             <swiper
+                :effect="'fade'"
                 :slides-per-view="1"
                 :space-between="0"
                 navigation
-                :autoplay="{ delay: 2000, autoplayDisableOnInteraction: false }"
+                :autoplay="{ delay: 3000, autoplayDisableOnInteraction: false }"
                 :pagination="{ clickable: true }"
                 :loop="true"
             >
@@ -34,6 +35,7 @@ import SwiperCore, {
     Scrollbar,
     A11y,
     Autoplay,
+    EffectFade
 } from "swiper";
 
 import BlockService from "@/app/Services/frontend/BlockService";
@@ -56,7 +58,7 @@ import "swiper/components/scrollbar/scrollbar.less";
 import "swiper/components/thumbs/thumbs.less";
 import "swiper/components/zoom/zoom.less";
 
-SwiperCore.use([Navigation, Autoplay, Pagination, Scrollbar, A11y]);
+SwiperCore.use([Navigation, Autoplay, Pagination, Scrollbar, A11y, EffectFade]);
 
 export default defineComponent({
     components: {

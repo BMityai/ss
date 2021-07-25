@@ -1,3 +1,4 @@
+import { onMounted } from "vue";
 import BackendRepository from "../../Repositories/HomePage/HomePageRepository";
 
 export default class BlockService {
@@ -27,5 +28,19 @@ export default class BlockService {
      */
     public async getThirdBlockContent(pageType: string, id: number | null) {
         return await this.backendRepository.getHomePageBlocksContent('third_block', pageType, id);
+    }
+
+    public moveNavigationOutsideOfContainer(blockClass: string, to: string): void {
+        const moveNavigation = () => {
+            const prevEl = document.querySelector(`${blockClass} .swiper-button-prev`),
+                nextEl = document.querySelector(`${blockClass} .swiper-button-next`),
+                parent = document.querySelector(`${blockClass} ${to}`);
+
+            if (parent && prevEl && nextEl) {
+                parent.append(prevEl);
+                parent.append(nextEl);
+            }
+        };
+        onMounted(moveNavigation);
     }
 }

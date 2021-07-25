@@ -1,7 +1,8 @@
 <template>
     <div class="logo" :data-block-id="logoBlockId">
         <router-link :to="logoUrl">
-            <img v-bind:src="logoImage" alt="" />
+            <img v-bind:src="logoImage" alt="logo" />
+            <!-- <img v-bind:src="require('@/assets/frontend/images/service/logo/logo_600x200.png')" alt="" /> -->
         </router-link>
     </div>
 </template>

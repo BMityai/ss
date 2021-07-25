@@ -13,9 +13,19 @@
             <Block2 v-bind="{ pageType: 'home_page' }" />
         </Suspense>
 
+
+        <Suspense>
+            <Block4 v-bind="{ pageType: 'home_page' }" />
+        </Suspense>
+
+        <Suspense>
+            <Block5 v-bind="{ pageType: 'home_page' }" />
+        </Suspense>
+
         <Suspense>
             <Block3 v-bind="{ pageType: 'home_page' }" />
         </Suspense>
+
     </div>
 </template>
 
@@ -24,14 +34,18 @@ import { defineComponent } from "vue";
 import Block1 from "@/components/blocks/block_1.vue";
 import Block2 from "@/components/blocks/block_2.vue";
 import Block3 from "@/components/blocks/block_3.vue";
+import Block4 from "@/components/blocks/block_4.vue";
+import Block5 from "@/components/blocks/block_5.vue";
 import Skeleton from 'primevue/skeleton';
 
 
 export default defineComponent({
     components: {
         Block1, // first block (swiper)
-        Block2, // second block
-        Block3, // third block
+        Block2, // second block (custom pages)
+        Block3, // third block (top products)
+        Block4, // fourth block (new products)
+        Block5, // fifth block (discount)
         Skeleton // skeleton
     },
     // setup() {
