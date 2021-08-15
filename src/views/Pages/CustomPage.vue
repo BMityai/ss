@@ -1,6 +1,6 @@
 <template>
     <div class="page container"> 
-                <div>sdfsdfsdfsdfsdfsdfsdf</div>
+                <div>404</div>
 
         <!-- <Suspense>
             <Block1 v-bind="{area:'custom_page'}" />

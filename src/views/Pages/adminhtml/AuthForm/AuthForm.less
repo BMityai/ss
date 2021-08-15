@@ -1,0 +1,62 @@
+.admin-auth {
+    .container {
+        width: 100vw;
+        display: flex;
+        height: 100vh;
+    }
+
+    &.page-wrapper {
+        min-height: 100vh;
+        background-color: @font-color;
+
+        .auth-form {
+            background-color: @gray_background-color;
+            max-width: 450px;
+            margin: auto;
+            width: 100%;
+            padding: 25px;
+            border-radius: 8px;
+
+            .header {
+                position: relative;
+                border-bottom: 1px solid #ccc;
+
+                img {
+                    width: 50px;
+                }
+
+                h3 {
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    margin: 0;
+                    transform: translate3d(-50%, -50%, 0);
+                }
+            }
+
+            .body {
+                margin-top: 20px;
+
+                span {
+                    margin-top: 30px;
+                }
+            }
+
+            button {
+                width: 100%;
+            }
+
+            .restore-password {
+                text-align: end;
+                margin: 20px 0;
+                .link {
+                    text-decoration: none;
+                    color: @main-store-color;
+                    &:hover {
+                       text-decoration: underline; 
+                    }
+                }
+            }
+        }
+    }
+}

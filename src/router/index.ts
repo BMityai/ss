@@ -1,9 +1,12 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import Home from '@/views/Pages/Home/Index.vue'
+import Home from '@/views/Pages/frontend/Home/Index.vue'
 import CustomPage from '@/views/Pages/CustomPage.vue'
-import MainLayout from '@/components/layouts/main/Index.vue'
+import MainLayout from '@/components/frontend/layouts/main/Index.vue'
+import AdminRouter from './admin'
+import { getAdminUser } from '@/app/Middleware/adminhtml/Middleware'
 
-const routes: Array<RouteRecordRaw> = [
+
+let routes: Array<RouteRecordRaw> = [
     {
         path: '/',
         name: 'mainLayout', // Header and Footer
@@ -17,17 +20,34 @@ const routes: Array<RouteRecordRaw> = [
             {
                 path: '/:pathMatch(.*)*',
                 name: 'CustomPage',
-                components: { pageContent: CustomPage }
+                components: { pageContent: CustomPage } // Custom page
             },
         ],
-
     },
 
 ]
 
+// Merge admin routes
+routes = routes.concat(new AdminRouter().routes)
+
+
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes
+})
+
+
+router.beforeEach(async (to, from, next) => {
+    await getAdminUser(to, from, next)  // get admin user and update from backend
+
+
+    if(!to.meta.middleware) {
+        return next();
+    }
+    // handle middlewares from routes
+    for(const middleware of to.meta.middleware as any) {  
+        return middleware(to, from, next)
+    }
 })
 
 export default router

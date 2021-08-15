@@ -1,5 +1,5 @@
 import { onMounted } from "vue";
-import BackendRepository from "../../Repositories/HomePage/HomePageRepository";
+import BackendRepository from "../../Repositories/frontend/HomePage/HomePageRepository";
 
 export default class BlockService {
 

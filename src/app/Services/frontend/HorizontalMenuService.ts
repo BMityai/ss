@@ -1,4 +1,4 @@
-import BackendRepository from "@/app/Repositories/HomePage/HomePageRepository"
+import BackendRepository from "@/app/Repositories/frontend/HomePage/HomePageRepository"
 
 export default class HorizontalMenuService {
     public async getHorizontalMenu(pageType: string, id: number | null = null) {

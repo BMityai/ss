@@ -1,6 +1,6 @@
 import { onMounted, onUnmounted, Ref, ref } from "vue";
 import UseHeaderFixType from "@/app/Types/UseHeaderFixTypes";
-import BackendRepository from "@/app/Repositories/HomePage/HomePageRepository";
+import BackendRepository from "@/app/Repositories/frontend/HomePage/HomePageRepository";
 
 export default class HeaderService {
 

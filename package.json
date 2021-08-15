@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "@types/axios": "^0.14.0",
+    "@vuelidate/core": "^2.0.0-alpha.23",
+    "@vuelidate/validators": "^2.0.0-alpha.20",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "jquery": "^3.6.0",
