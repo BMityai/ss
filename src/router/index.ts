@@ -3,7 +3,7 @@ import Home from '@/views/Pages/frontend/Home/Index.vue'
 import CustomPage from '@/views/Pages/CustomPage.vue'
 import MainLayout from '@/components/frontend/layouts/main/Index.vue'
 import AdminRouter from './admin'
-import { getAdminUser } from '@/app/Middleware/adminhtml/Middleware'
+import { getAdminUserStateFromBackend } from '@/app/Middleware/adminhtml/Middleware'
 
 
 let routes: Array<RouteRecordRaw> = [
@@ -38,14 +38,20 @@ const router = createRouter({
 
 
 router.beforeEach(async (to, from, next) => {
-    await getAdminUser(to, from, next)  // get admin user and update from backend
+    await getAdminUserStateFromBackend(to, from, next)  // get admin user state from backend when reload page or first initial
 
 
-    if(!to.meta.middleware) {
+    let middlewares = [];
+    for (const route of to.matched) {
+        if(route.meta.middleware) {
+            middlewares = middlewares.concat(route.meta.middleware as [])
+        }
+    }
+    if (!to.meta.middleware) {
         return next();
     }
     // handle middlewares from routes
-    for(const middleware of to.meta.middleware as any) {  
+    for (const middleware of to.meta.middleware as any) {
         return middleware(to, from, next)
     }
 })

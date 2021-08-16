@@ -16,8 +16,21 @@ export default class BackendRepositoryClient {
             method: method as Method,
             params: params,
             data: body,
-            headers: headers
+            headers: this.setAdminUserTokenToHeader(headers)
         });
         return await response.data;
+    }
+
+    
+    private setAdminUserTokenToHeader(headers: any | null) {
+        if (!sessionStorage.getItem('aToken') || sessionStorage.getItem('aToken') === null) {
+            return headers;
+        }
+
+        if (headers === null) {
+            return {token: sessionStorage.getItem('aToken')};
+        } else {
+            return headers.token = sessionStorage.getItem('aToken');
+        }
     }
 }

@@ -1,6 +1,14 @@
 
 export default interface AuthRepositoryInterface {
-    
-    sendAuthForm(action: string, method: 'POST' | 'PUT', params: any)
+
+    /**
+     * Auth user
+     */
+    authAdminUser(action: string, method: 'POST' | 'PUT', params: any): any
+
+    /**
+     * Get user by jwt
+     */
+    getUserByJwt(jwt: string): any
 
 }

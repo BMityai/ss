@@ -6,40 +6,49 @@ const user = reactive({
     data: null
 });
 
+/**
+ * Admin user auth service
+ */
 const service = new AdminUserAuthService();
 
 
 /**
- * User setter
+ * Get admin user from backend and set to frontend state
  */
-async function getUser() {
-    if (!sessionStorage.getItem('token') || sessionStorage.getItem('token') === null) {
+async function getUser(): Promise<void> {
+    // Return if auth
+    if(isAuth.value) {
+        return;
+    }
+
+    // Return if not set token
+    if (!sessionStorage.getItem('aToken') || sessionStorage.getItem('aToken') === null) {
         isAuth.value = false;
         user.data = null;
         return;
     }
+    // Get user state
     try {
-        const response = await service.getUserByJwt(sessionStorage.getItem('token') as string);
+        const response = await service.getUserByJwt(sessionStorage.getItem('aToken') as string);
         isAuth.value = response.auth;
         user.data = response.user;
-        sessionStorage.setItem('user', JSON.stringify(response.user));
     } catch (e) {
-        sessionStorage.removeItem('token');
-        sessionStorage.removeItem('user');
+        sessionStorage.removeItem('aToken');
         return;
     }
 }
 
-function setUser(userData: any) {
+
+function authAdminUser(userData: any) {
     isAuth.value = true;
-    sessionStorage.setItem('user', JSON.stringify(userData.user));
-    sessionStorage.setItem('token', userData.token);
+    user.data = userData.user;
+    sessionStorage.setItem('aToken', userData.token);
 }
 
 export {
     isAuth,
     user,
     getUser,
-    setUser
+    authAdminUser
 }
 

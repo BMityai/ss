@@ -1,5 +1,7 @@
 import BackendRepositoryClient from "../../BackendRepositoryClient";
 import HomePageRepositoryInterface from "./HomePageRepositoryInterface";
+import HeaderDataType from '@/app/Types/GetHeaderDataType'
+import BlockType from "@/app/Types/BlockType";
 
 export default class HomePageRepository implements HomePageRepositoryInterface {
 
@@ -12,10 +14,10 @@ export default class HomePageRepository implements HomePageRepositoryInterface {
     }
 
     /**
-     * Get header data (menu)
+     * Get header data (logo, menu, salesLogo)
      */
-    public async getHeaderData() {
-        return await this.client.fetch('header', 'GET');
+    public async getHeaderData(): Promise<HeaderDataType> {
+        return await this.client.fetch('header', 'GET') as unknown as HeaderDataType;
     }
 
     /**
@@ -25,8 +27,8 @@ export default class HomePageRepository implements HomePageRepositoryInterface {
         blockName: 'horizontal_menu' | 'first_block' | 'second_block' | 'third_block' | 'fourthBlock' | 'fifthBlock',
         pageType: string,
         id: number | null = null
-    ) {
-        return await this.client.fetch(`${this.getContentBlocksUrl}${blockName}`, 'GET', { pageType: pageType, id: id });
-
+    ): Promise <BlockType[]> 
+    {
+        return await this.client.fetch(`${this.getContentBlocksUrl}${blockName}`, 'GET', { pageType: pageType, id: id }) as unknown as BlockType[];
     }
 }

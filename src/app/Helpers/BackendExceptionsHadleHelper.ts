@@ -1,6 +1,11 @@
+import { ToastServiceMethods } from "primevue/toastservice";
+
 export default class BackendExceptionsHadleHelper {
     
-    public adminAuthExceptionsHandle(error, toast) {
+    /**
+     * Admin user auth request to backend error handler
+     */
+    public adminAuthExceptionsHandle(error: any, toast: ToastServiceMethods): void {
         if (error.response.status == 422) { // validation exception
             for (const [field, messages] of Object.entries(error.response.data.data)) {
                 const messageText = messages as any;

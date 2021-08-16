@@ -3,7 +3,7 @@ import AdminAuth from '@/views/Pages/adminhtml/AuthForm/Index.vue'
 import DashboardLayout from '@/components/adminhtml/layouts/dashboard/main/Index.vue'
 import AdminPanelLayout from '@/components/adminhtml/layouts/main/Index.vue'
 import Dashboard from '@/views/Pages/adminhtml/Dashboard/Index.vue'
-import { onlyNotAuth } from '@/app/Middleware/adminhtml/Middleware'
+import { notAuth, auth } from '@/app/Middleware/adminhtml/Middleware'
 
 
 
@@ -20,6 +20,11 @@ export default class AdminRouter {
                 path: '/admin',
                 name: 'admin',
                 component: AdminPanelLayout,
+                meta: {
+                    middleware: [
+                        'test'
+                    ]
+                },
                 children: [
                     {
                         path: '',
@@ -27,7 +32,7 @@ export default class AdminRouter {
                         components: { adminhtml: AdminAuth },
                         meta: {
                             middleware: [
-                                onlyNotAuth
+                                notAuth
                             ]
                         }
                     },
@@ -41,7 +46,9 @@ export default class AdminRouter {
                                 name: 'dashboard',
                                 components: { adminhtmlContent: Dashboard},
                                 meta: {
-                                   
+                                    middleware: [
+                                        auth
+                                    ]
                                 }
                             }
                         ]

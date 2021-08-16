@@ -1,4 +1,4 @@
-import { useVuelidate, Validation } from "@vuelidate/core";
+import { useVuelidate, Validation, ValidationRuleWithoutParams, ValidationRuleWithParams } from "@vuelidate/core";
 import { required, minLength, helpers } from "@vuelidate/validators";
 
 import { useToast } from "primevue/usetoast";
@@ -21,7 +21,7 @@ export default class FormValidateHelper {
     /**
      * Validate and submit form
      */
-    public async getValidator() {
+    public getValidator() {
         // Set submited value
         const submitted = ref(false);
 
@@ -32,12 +32,12 @@ export default class FormValidateHelper {
         const toast = useToast();
 
         // Submit method
-        const handleSubmit = async () => {
+        const handleSubmit = () => {
             submitted.value = true;
             if (v$.value.$invalid && this.useToast) {
                 toast.add({ severity: "error", summary: "Ошибка", detail: "Проверьте правильность запонения формы", life: 3000 });
-                return;
             }
+            return !v$.value.$invalid;
         };
         return { v$, handleSubmit, submitted, toast};
     }
@@ -45,7 +45,7 @@ export default class FormValidateHelper {
     /**
      * Customize require validator
      */
-    public required() {
+    public required(): ValidationRuleWithParams {
         return helpers.withMessage(
             "Введите Value",
             required
@@ -55,30 +55,11 @@ export default class FormValidateHelper {
     /**
      * Customize minLength validator
      */
-    public minLength(length: number) {
+    public minLength(length: number): ValidationRuleWithParams {
         return helpers.withMessage(
             ({ $params }) =>
                 `Минимальное количество символов: ${$params["min"]}`,
             minLength(length)
         )
-    }
-    /**
-     * Handle exception from backend
-     */
-    private handleExceptions(error: any, toast: any) {
-        if (error.response.status == 422) { // validation exception
-            for (const [field, messages] of Object.entries(error.response.data.data)) {
-                const messageText = messages as any;
-                toast.add({ severity: "error", summary: `Ошибка ${field} [${error.response.status}]`, detail: messageText[0], life: 3000 });
-            }
-            return;
-        } else if (error.response.status == 404) { // user not found
-            toast.add({ severity: "error", summary: `Ошибка авторизации`, detail: 'Вы ввели неправильный логин или пароль', life: 3000 });
-            return;
-        } else if (error.response.status == 401) { // password is not valid
-            toast.add({ severity: "error", summary: `Ошибка авторизации`, detail: 'Вы ввели неправильный логин или пароль', life: 3000 });
-            return;
-        }
-        toast.add({ severity: "error", summary: `Ошибка [${error.response.status}]`, detail: "Произошла ошибка, попробуйте позже", life: 3000 });
     }
 }

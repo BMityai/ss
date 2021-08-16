@@ -14,12 +14,15 @@ export default class AuthRepository implements AuthRepositoryInterface {
     }
 
     /**
-     * Get home page blocks content 
+     * Auth user
      */
-    public async sendAuthForm(params: any) {
+    public async authAdminUser(params: any) {
         return await this.client.fetch(`${this.adminUrl}${this.authUrl}`, 'POST', null, params);
     }
 
+    /**
+     * Get user by jwt
+     */
     public async getUserByJwt(jwt: string) {
         return this.client.fetch(`${this.adminUrl}/user`, 'GET', {jwt})
     }

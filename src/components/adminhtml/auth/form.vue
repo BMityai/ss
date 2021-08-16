@@ -107,7 +107,7 @@ import Validator from "@/app/Helpers/FormValidateHelper";
 import AuthRepository from "@/app/Repositories/adminhtml/Auth/AuthRepository";
 import BackendExceptionsHandleHelper from "@/app/Helpers/BackendExceptionsHadleHelper";
 import router from "@/router";
-import { setUser } from "@/app/Repositories/states/AdminUserState";
+import { authAdminUser } from "@/app/Repositories/states/AdminUserState";
 
 export default defineComponent({
     components: {
@@ -141,17 +141,17 @@ export default defineComponent({
         validatorHelper.init(state, rules, true);
 
         // Cet validateor
-        const validator = await validatorHelper.getValidator();
+        const validator = validatorHelper.getValidator();
 
         const handleSubmit = async () => {
             const repository = new AuthRepository();
-            validator.handleSubmit();
-
+            const isValid = validator.handleSubmit();
+            if(!isValid) {
+                return;
+            }
             try {
-
-                const response = await repository.sendAuthForm(state);
-                console.log(response);
-                setUser(response);
+                const response = await repository.authAdminUser(state);
+                authAdminUser(response);
                 router.push({ name: "dashboard" });
             } catch (e) {
                 const handler = new BackendExceptionsHandleHelper();
