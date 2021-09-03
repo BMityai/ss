@@ -9,6 +9,6 @@ export default interface AuthRepositoryInterface {
     /**
      * Get user by jwt
      */
-    getUserByJwt(jwt: string): any
+    getAdminUserByJwt(jwt: string): any
 
 }

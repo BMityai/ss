@@ -1,11 +1,13 @@
 import { isAuth, getUser } from '@/app/Repositories/states/AdminUserState'
 import router from '@/router';
 import { NavigationGuardNext, RouteLocationNormalized, RouteRecord } from 'vue-router';
+import { activeSection } from "@/app/Repositories/states/AdminPanelFrontStates";
+
 
 /**
  *  Get adminUserState when reload page or first initial 
  */
-async function getAdminUserStateFromBackend(to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext): Promise <void> {
+async function getAdminUserStateFromBackend(to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext): Promise<void> {
     if (to.path.includes('/admin')) {
         await getUser();
         next();
@@ -19,7 +21,7 @@ function notAuth(to: RouteLocationNormalized, from: RouteLocationNormalized, nex
     if (!isAuth.value) {
         next();
     } else {
-        router.push({name: 'dashboard'});
+        router.push({ name: 'dashboard' });
     }
 }
 
@@ -28,10 +30,18 @@ function notAuth(to: RouteLocationNormalized, from: RouteLocationNormalized, nex
  */
 function auth(to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext): void {
     if (!isAuth.value) {
-        router.push({name: 'adminAuth'});
+        router.push({ name: 'adminAuth' });
     } else {
         next();
     }
 }
 
-export { getAdminUserStateFromBackend, notAuth, auth }
+/**
+ * 
+ */
+
+function showAsActiveSectionInSidebar(to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext): void {
+    activeSection.value = to.matched[2].name as string;
+}
+
+export { getAdminUserStateFromBackend, notAuth, auth, showAsActiveSectionInSidebar }

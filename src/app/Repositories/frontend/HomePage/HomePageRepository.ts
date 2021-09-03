@@ -10,7 +10,7 @@ export default class HomePageRepository implements HomePageRepositoryInterface {
 
     constructor() {
         this.client = new BackendRepositoryClient();
-        this.getContentBlocksUrl = 'home_page/content/';
+        this.getContentBlocksUrl = 'content/';
     }
 
     /**

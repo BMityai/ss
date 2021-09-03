@@ -27,4 +27,5 @@ interface CategoryInTreeType {
 export default interface HeaderDataType {
     logo: ContentType;
     menu: CategoryInTreeType[];
+    salesLogo: ContentType;
 }

@@ -1,6 +1,8 @@
 import axios, { Method } from "axios";
+import { useCookie } from "@vue-composable/cookie";
+
 export default class BackendRepositoryClient {
-    
+
 
     baseUrl: string;
     version = 'v1';
@@ -10,7 +12,6 @@ export default class BackendRepositoryClient {
     }
 
     public async fetch(path: string, method: string, params: any | null = null, body: any | null = null, headers: any = null): Promise<JSON> {
-
         const response = await axios({
             url: `${this.baseUrl}/${path}`,
             method: method as Method,
@@ -21,16 +22,18 @@ export default class BackendRepositoryClient {
         return await response.data;
     }
 
-    
+
     private setAdminUserTokenToHeader(headers: any | null) {
-        if (!sessionStorage.getItem('aToken') || sessionStorage.getItem('aToken') === null) {
+        const { cookie } = useCookie("aToken");
+
+        if (!cookie.value || cookie.value === null) {
             return headers;
         }
 
         if (headers === null) {
-            return {token: sessionStorage.getItem('aToken')};
+            return { token: cookie.value };
         } else {
-            return headers.token = sessionStorage.getItem('aToken');
+            return headers.token = cookie.value;
         }
     }
 }

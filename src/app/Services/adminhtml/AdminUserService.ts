@@ -8,6 +8,6 @@ export default class AdminUserService {
     }
 
     public async getUserByJwt(jwt: string): Promise<any> {
-        return await this.backendRepository.getUserByJwt(jwt);
+        return await this.backendRepository.getAdminUserByJwt(jwt);
     }
 }

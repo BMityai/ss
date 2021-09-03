@@ -1,0 +1,23 @@
+
+import BackendRepositoryClient from "../../BackendRepositoryClient";
+import ContentRepositoryInterface from "./ContentRepositoryInterface";
+
+export default class ContentRepository implements ContentRepositoryInterface {
+
+    private adminUrl: string;
+    private contentBlocksUrl: string;
+    private client: BackendRepositoryClient;
+
+    constructor() {
+        this.client = new BackendRepositoryClient();
+        this.adminUrl = 'admin';
+        this.contentBlocksUrl = '/content/blocks';
+    }
+
+    /**
+     * Auth user
+     */
+    public async getBlocks(params) {
+        return await this.client.fetch(`${this.adminUrl}${this.contentBlocksUrl}`, 'GET', params);
+    }
+}

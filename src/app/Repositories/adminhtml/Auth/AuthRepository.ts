@@ -23,8 +23,7 @@ export default class AuthRepository implements AuthRepositoryInterface {
     /**
      * Get user by jwt
      */
-    public async getUserByJwt(jwt: string) {
+    public async getAdminUserByJwt(jwt: string) {
         return this.client.fetch(`${this.adminUrl}/user`, 'GET', {jwt})
     }
-
 }

@@ -40,19 +40,12 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
     await getAdminUserStateFromBackend(to, from, next)  // get admin user state from backend when reload page or first initial
 
-
-    let middlewares = [];
-    for (const route of to.matched) {
-        if(route.meta.middleware) {
-            middlewares = middlewares.concat(route.meta.middleware as [])
-        }
-    }
     if (!to.meta.middleware) {
         return next();
     }
     // handle middlewares from routes
     for (const middleware of to.meta.middleware as any) {
-        return middleware(to, from, next)
+        middleware(to, from, next)
     }
 })
 
