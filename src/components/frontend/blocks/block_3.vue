@@ -44,8 +44,7 @@
 <script lang='ts'>
 import { defineComponent } from "vue";
 import ProductCard from "@/components/frontend/layouts/product_card/Index.vue";
-import BlockService from "@/app/Services/frontend/BlockService";
-import { useWindowSize } from "vue-window-size";
+
 
 export default defineComponent({
     components: {
@@ -61,18 +60,14 @@ export default defineComponent({
             default: null,
         },
     },
-    async setup(props) {
-        const service = new BlockService();
-        const topProducts = await service.getThirdBlockContent(
-            props.pageType,
-            props.id
-        );
+    setup(props) {
+
 
         // const { width, height } = useWindowSize();
         // console.log(width.value, "width");
         // console.log(height.value, "height");
 
-        return { topProducts };
+        return {  };
     },
 });
 </script>

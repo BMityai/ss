@@ -11,12 +11,9 @@
                 :loop="true"
             >
                 <swiper-slide
-                    v-for="item in firstBlock"
+                    v-for="item in data.items"
                     :key="item.id"
-                    :data-content-id="item.id"
-                    :data-block="item.block"
-                    :data-block-id="item.blockId"
-                    :data-area="item.area"
+                    :data-content-block-item-id="item.id"
                 >
                     <router-link :to="item.url">
                         <img :src="item.image" alt="" />
@@ -35,10 +32,8 @@ import SwiperCore, {
     Scrollbar,
     A11y,
     Autoplay,
-    EffectFade
+    EffectFade,
 } from "swiper";
-
-import BlockService from "@/app/Services/frontend/BlockService";
 
 import { Swiper, SwiperSlide } from "swiper/vue";
 
@@ -61,29 +56,17 @@ import "swiper/components/zoom/zoom.less";
 SwiperCore.use([Navigation, Autoplay, Pagination, Scrollbar, A11y, EffectFade]);
 
 export default defineComponent({
+    name: "Block1",
     components: {
         Swiper,
         SwiperSlide,
     },
     props: {
-        pageType: {
-            type: String,
-            default: "home_page",
-        },
-        id: {
-            type: Number,
-            default: null,
-        },
+        data: Object 
     },
-    async setup(props) {
-        const service = new BlockService();
 
-        const firstBlock = await service.getFirstBlockContent(
-            props.pageType,
-            props.id
-        );
-
-        return { firstBlock };
+    setup(props) {
+        return {};
     },
 });
 </script>

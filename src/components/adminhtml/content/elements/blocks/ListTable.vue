@@ -1,14 +1,12 @@
 <template>
     <Toast />
 
-    <h2>list table</h2>
-
     <div>
         <DataTable
             :value="blocks"
             :lazy="true"
             :paginator="true"
-            :rows="25"
+            :rows="10"
             :rowHover="true"
             v-model:filters="filters"
             filterDisplay="menu"
@@ -23,7 +21,7 @@
             @page="onPage($event)"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-            :rowsPerPageOptions="[25, 50, 75]"
+            :rowsPerPageOptions="[10, 25, 50]"
             @sort="onSort($event)"
             @filter="onFilter($event)"
             :globalFilterFields="[
@@ -39,16 +37,19 @@
             <template #header>
                 <div class="p-d-flex p-jc-between p-ai-center">
                     <div class="left_block">
-                        <Button
-                            label="Create"
-                            icon="pi pi-plus-circle"
-                            class="p-button-success"
-                        />
-                        <Button
-                            label="Delete"
-                            icon="pi pi-trash"
-                            class="p-button-danger"
-                        />
+                        <div class="actions">
+                            <Button
+                                label="Create"
+                                icon="pi pi-plus-circle"
+                                class="p-button-success"
+                            />
+                            <Button
+                                style="margin-left: 10px"
+                                label="Delete"
+                                icon="pi pi-trash"
+                                class="p-button-danger"
+                            />
+                        </div>
                     </div>
 
                     <div class="right_block">
@@ -56,6 +57,7 @@
                             type="button"
                             icon="pi pi-filter-slash"
                             label="Clear"
+                            style="margin-right: 10px"
                             class="p-button-warning"
                             @click="clearFilter()"
                         />
@@ -204,14 +206,19 @@
                     >
                         <div class="action">
                             <Button
-                                style="width: 120px"
+                                style="width: 120px; text-align: left"
                                 label="Edit"
                                 icon="pi pi-pencil"
+                                @click="blockEditAction"
                             />
                         </div>
                         <div class="action">
                             <Button
-                                style="width: 120px; margin-top:5px"
+                                style="
+                                    width: 120px;
+                                    margin-top: 5px;
+                                    text-align: left;
+                                "
                                 label="Delete"
                                 class="p-button-danger"
                                 icon="pi pi-trash"
@@ -232,7 +239,6 @@ import ContentService from "@/app/Services/adminhtml/ContentService";
 import Toast from "primevue/toast";
 import Button from "primevue/button";
 import OverlayPanel from "primevue/overlaypanel";
-import ConfirmDialog from "primevue/confirmdialog";
 import { useToast } from "primevue/usetoast";
 import { useConfirm } from "primevue/useconfirm";
 
@@ -266,6 +272,7 @@ export default {
             clearFilter,
             op,
             edit,
+            blockEditAction
         } = await contentService.getBlocksTable();
 
         const confirmDelete = () => {
@@ -290,6 +297,7 @@ export default {
                     });
                 },
             });
+
         };
 
         return {
@@ -307,6 +315,7 @@ export default {
             op,
             confirmDelete,
             edit,
+            blockEditAction
         };
     },
 };

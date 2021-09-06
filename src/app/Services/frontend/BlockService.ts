@@ -9,6 +9,10 @@ export default class BlockService {
         this.backendRepository = new BackendRepository();
     }
 
+    public async getHomePageAllContentBlocks() {
+        return await this.backendRepository.getHomePageAllContentBlocks();
+    }
+
     /**
      * Get first block content
      */

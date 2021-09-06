@@ -20,4 +20,8 @@ export default class ContentRepository implements ContentRepositoryInterface {
     public async getBlocks(params) {
         return await this.client.fetch(`${this.adminUrl}${this.contentBlocksUrl}`, 'GET', params);
     }
+
+    public async getBlockById(blockId) {
+        return await this.client.fetch(`${this.adminUrl}/content/block/${blockId}`, 'GET');
+    }
 }

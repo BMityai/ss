@@ -10,7 +10,7 @@ export default class HomePageRepository implements HomePageRepositoryInterface {
 
     constructor() {
         this.client = new BackendRepositoryClient();
-        this.getContentBlocksUrl = 'content/';
+        this.getContentBlocksUrl = 'content/block/';
     }
 
     /**
@@ -19,6 +19,15 @@ export default class HomePageRepository implements HomePageRepositoryInterface {
     public async getHeaderData(): Promise<HeaderDataType> {
         return await this.client.fetch('header', 'GET') as unknown as HeaderDataType;
     }
+
+    public async getHomePageAllContentBlocks() {
+        return await this.client.fetch(`${this.getContentBlocksUrl}home_page`, 'GET');
+    }
+
+
+
+
+
 
     /**
      * Get home page blocks content 

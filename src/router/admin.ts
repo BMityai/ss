@@ -12,7 +12,9 @@ import ContentList from '@/views/Pages/adminhtml/Dashboard/Content/Index.vue'
 import Stores from '@/views/Pages/adminhtml/Dashboard/Stores/Index.vue'
 import System from '@/views/Pages/adminhtml/Dashboard/System/Index.vue'
 import Blocks from '@/views/Pages/adminhtml/Dashboard/Content/Blocks.vue'
+import BlockEditForm from '@/views/Pages/adminhtml/Dashboard/Content/BlockEditForm.vue'
 import { notAuth, auth, showAsActiveSectionInSidebar } from '@/app/Middleware/adminhtml/Middleware'
+import router from ".";
 
 
 
@@ -71,7 +73,7 @@ export default class AdminRouter {
                                 name: 'dashboard',
                                 components: { adminhtmlContent: Dashboard },
                                 meta: {
-                                    
+
                                 },
 
                             },
@@ -80,7 +82,7 @@ export default class AdminRouter {
                                 name: 'sales',
                                 components: { adminhtmlContent: Sales },
                                 meta: {
-                                   
+
                                 },
                             },
                             {
@@ -88,7 +90,7 @@ export default class AdminRouter {
                                 name: 'catalog',
                                 components: { adminhtmlContent: Catalog },
                                 meta: {
-                                    
+
                                 },
                             },
                             {
@@ -96,7 +98,7 @@ export default class AdminRouter {
                                 name: 'customers',
                                 components: { adminhtmlContent: Customers },
                                 meta: {
-                                    
+
                                 },
                             },
                             {
@@ -104,7 +106,7 @@ export default class AdminRouter {
                                 name: 'contentLayout',
                                 components: { adminhtmlContent: ContentLayout },
                                 meta: {
-                                    
+
                                 },
                                 children: [
                                     {
@@ -116,6 +118,12 @@ export default class AdminRouter {
                                         path: 'blocks',
                                         name: 'contentBlocks',
                                         components: { contentLayout: Blocks },
+                                    },
+                                    {
+                                        path: 'block/edit/:blockId',
+                                        name: 'blockEdit',
+                                        components: { contentLayout: BlockEditForm },
+                                        props: true
                                     }
                                 ]
                             },

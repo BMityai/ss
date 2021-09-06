@@ -2,6 +2,7 @@ import ContentRepository from '@/app/Repositories/adminhtml/Content/ContentRepos
 import { useToast } from 'primevue/usetoast';
 import BackendExceptionsHandleHelper from "@/app/Helpers/BackendExceptionsHadleHelper";
 import { FilterMatchMode, FilterOperator } from "primevue/api";
+import router from '@/router';
 
 import { ref, onMounted } from "vue";
 
@@ -120,6 +121,10 @@ export default class AdminUserService {
             editableBlockId.value = blockId;
             op.value.toggle(event);
         };
+        const blockEditAction = () => {
+            router.push({name: 'blockEdit', params: {blockId: editableBlockId.value}})
+        }
+
         return {
             dt,
             loading,
@@ -133,9 +138,14 @@ export default class AdminUserService {
             selectedBlocks,
             clearFilter,
             op,
-            edit
+            edit,
+            blockEditAction
 
         }
+    }
+
+    public async getBlockById(blockId: string) {
+        return await this.backendRepository.getBlockById(blockId);
     }
 
 
