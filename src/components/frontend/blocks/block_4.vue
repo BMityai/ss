@@ -1,6 +1,6 @@
 <template>
     <div class="fourth_block">
-        <h2 class="title">Новинки</h2>
+        <h2 class="title" v-if="data.title.length"> {{data.title}} </h2>
         <div class="new_items">
             <swiper
                 :slides-per-view="6"

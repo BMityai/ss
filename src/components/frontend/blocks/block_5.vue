@@ -1,6 +1,6 @@
 <template>
     <div class="fifth_block">
-        <h2 class="title">Товары со скидкой!</h2>
+        <h2 class="title" v-if="data.title.length"> {{data.title}} </h2>
         <div class="discount">
             <swiper
                 :slides-per-view="6"
