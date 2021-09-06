@@ -27,6 +27,7 @@
             :globalFilterFields="[
                 'id',
                 'name',
+                'title',
                 'block',
                 'pageType',
                 'isEnable',
@@ -101,6 +102,21 @@
                         @keydown.enter="filterCallback()"
                         class="p-column-filter"
                         placeholder="Search by name"
+                    />
+                </template>
+            </Column>
+
+            <Column field="title" header="Title" ref="title" :sortable="true">
+                <template #body="{ data }">
+                    <span class="image-text">{{ data.title }}</span>
+                </template>
+                <template #filter="{ filterModel, filterCallback }">
+                    <InputText
+                        type="text"
+                        v-model="filterModel.value"
+                        @keydown.enter="filterCallback()"
+                        class="p-column-filter"
+                        placeholder="Search by title"
                     />
                 </template>
             </Column>

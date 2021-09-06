@@ -35,6 +35,12 @@ export default class AdminUserService {
                     { value: null, matchMode: FilterMatchMode.STARTS_WITH },
                 ],
             },
+            title: {
+                operator: FilterOperator.AND,
+                constraints: [
+                    { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+                ],
+            },
             block: {
                 operator: FilterOperator.AND,
                 constraints: [
