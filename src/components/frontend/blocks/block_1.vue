@@ -1,6 +1,6 @@
 <template>
     <div class="first_block">
-        <h2 class="title" v-if="data.title"> {{data.title}} </h2>
+        <h2 class="title" style="padding:0 20px;" v-if="data.title"> {{data.title}} </h2>
         <div class="full_width_banner">
             <swiper
                 :effect="'fade'"

@@ -50,13 +50,28 @@
                         </div>
 
                         <!-- block -->
-                        <div class="field title">
+                        <div class="field block">
                             <div class="layout">Block</div>
                             <div class="value">
                                 <Dropdown
                                     :filter="true"
                                     v-model="form.value.blockId"
-                                    :options="contentBlockOptions"
+                                    :options="contentBlockOptions.blockOptions"
+                                    optionLabel="value"
+                                    optionValue="id"
+                                    placeholder="Select a block"
+                                />
+                            </div>
+                        </div>
+
+                        <!-- block -->
+                        <div class="field page_type">
+                            <div class="layout">Page Type</div>
+                            <div class="value">
+                                <Dropdown
+                                    :filter="true"
+                                    v-model="form.value.blockId"
+                                    :options="contentBlockOptions.pageTypeOptions"
                                     optionLabel="value"
                                     optionValue="id"
                                     placeholder="Select a block"
@@ -101,8 +116,12 @@ export default defineComponent({
         }
         const contentBlockOptions = await contentService.getBlockDictOptions();
 
+        console.log(contentBlockOptions)
+
+       
         const enableOptions = ref([{label:'Enable', value: 1}, {label:'Disable', value: 0}]);
 
+        // Promise.allSettled()
         return {
             form,
             contentBlockOptions,

@@ -158,7 +158,6 @@ export default class AdminUserService {
         return await this.backendRepository.getBlockDictOptions();
     }
 
-
     private async getBlocks(params, toast): Promise<any> {
         try {
             return await this.backendRepository.getBlocks(params);
