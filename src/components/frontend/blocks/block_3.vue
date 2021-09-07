@@ -1,6 +1,6 @@
 <template>
     <div class="third_block">
-        <h2 class="title" v-if="data.title.length"> {{data.title}} </h2>
+        <h2 class="title" v-if="data.title"> {{data.title}} </h2>
         <div class="product_list">
             <ProductCard />
             <ProductCard />

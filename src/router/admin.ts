@@ -11,8 +11,8 @@ import ContentLayout from '@/views/Pages/adminhtml/Dashboard/Content/ContentLayo
 import ContentList from '@/views/Pages/adminhtml/Dashboard/Content/Index.vue'
 import Stores from '@/views/Pages/adminhtml/Dashboard/Stores/Index.vue'
 import System from '@/views/Pages/adminhtml/Dashboard/System/Index.vue'
-import Blocks from '@/views/Pages/adminhtml/Dashboard/Content/Blocks.vue'
-import BlockEditForm from '@/views/Pages/adminhtml/Dashboard/Content/BlockEditForm.vue'
+import Blocks from '@/views/Pages/adminhtml/Dashboard/Content/Block/Blocks.vue'
+import BlockEditForm from '@/views/Pages/adminhtml/Dashboard/Content/Block/Edit.vue'
 import { notAuth, auth, showAsActiveSectionInSidebar } from '@/app/Middleware/adminhtml/Middleware'
 import router from ".";
 

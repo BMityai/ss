@@ -1,6 +1,6 @@
 <template>
     <div class="second_block">
-        <h2 class="title" v-if="data.title.length"> {{data.title}} </h2>
+        <h2 class="title" v-if="data.title"> {{data.title}} </h2>
         <div
             class="block_item"
             v-for="content in data.items"
