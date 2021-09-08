@@ -5,6 +5,7 @@
 }
 
 .edit_form {
+    margin-bottom: 50px;
     .form {
         .general {
             .field {
@@ -23,7 +24,9 @@
                 .value {
                     width: 50%;
                     padding: 15px;
-                    input, .p-dropdown {
+
+                    input,
+                    .p-dropdown {
                         width: 100%;
                         max-width: 400px;
                     }
@@ -31,8 +34,37 @@
                 }
             }
         }
+
         .p-accordion-content {
+            padding: 10px 0;
             border: none;
+
+            .action_block {
+                margin: 10px 0;
+                display: flex;
+                justify-content: flex-end;
+                
+            }
+            .p-column-header-content {
+                width: 100%;
+                .p-column-title {
+                    margin: 0 auto;
+                }
+            }
+            .item_image {
+                display: flex;
+                .p-image {
+                    width: 50%;
+                    img {
+                        max-width: 100%;
+                    }
+                }
+                .select_image {
+                    margin: 0 auto;
+                    text-align-last: center;
+                    align-self: center;
+                }
+            }
         }
 
     }
