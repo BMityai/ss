@@ -1,6 +1,7 @@
 <template>
     <div class="edit_form">
-        <h2>Edit form "{{ form.value.name }}"</h2>
+        <h2 v-if="blockId">Edit block "{{ form.value.name }}"</h2>
+        <h2 v-else>New block</h2>
         <div class="actions">
             <div class="left_panel">
                 <Button
@@ -23,12 +24,14 @@
                     icon="pi pi-upload"
                     label="Save and continue"
                     class="p-button-raised p-button-raised"
+                    @click="save(form.value)"
                 />
 
                 <Button
                     icon="pi pi-save"
                     label="Save"
                     class="p-button-raised p-button-success"
+                    @click="save(form.value, true)"
                 />
             </div>
         </div>
@@ -253,6 +256,8 @@ export default defineComponent({
 
         if (props.blockId) {
             form.value = await contentService.getBlockById(props.blockId);
+        } else {
+            form.value = contentService.getEmptyBlock();
         }
 
         const {
@@ -278,7 +283,7 @@ export default defineComponent({
             contentService.itemsCrudProcessing(form);
 
         const { confirmDelete } = contentService.blockDeleteProcessing(true);
-
+        const { save } = contentService.saveBlock();
         return {
             form,
             blockOptions,
@@ -294,6 +299,7 @@ export default defineComponent({
             deleteItem,
             router,
             confirmDelete,
+            save,
         };
     },
 });

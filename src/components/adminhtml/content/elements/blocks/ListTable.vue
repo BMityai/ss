@@ -41,6 +41,7 @@
                                 label="Create"
                                 icon="pi pi-plus-circle"
                                 class="p-button-success"
+                                @click="router.push({name:'blockCreate'})"
                             />
                             <Button
                                 style="margin-left: 10px"
@@ -253,7 +254,7 @@ import Column from "primevue/column";
 import ContentService from "@/app/Services/adminhtml/ContentService";
 import Button from "primevue/button";
 import OverlayPanel from "primevue/overlaypanel";
-
+import router from "@/router";
 import InputText from "primevue/inputtext";
 
 export default {
@@ -302,7 +303,8 @@ export default {
             confirmDelete,
             edit,
             blockEditAction,
-            editableBlockId
+            editableBlockId,
+            router
         };
     },
 };

@@ -139,7 +139,7 @@ export default class ContentService {
             op.value.toggle(event);
         };
         const blockEditAction = () => {
-            router.push({name: 'blockEdit', params: {blockId: editableBlockId.value}})
+            router.push({ name: 'blockEdit', params: { blockId: editableBlockId.value } })
         }
 
         return {
@@ -186,7 +186,7 @@ export default class ContentService {
      * Image upload to items
      */
     public imageUploadProcessing(form) {  //@todo typecast
-        
+
         const onUpload = (event) => {
             const file = event.target.files[0];
             const allowedFormats = ["jpg", "jpeg", "png", "gif"];
@@ -261,7 +261,7 @@ export default class ContentService {
                 header: "Confirmation",
                 icon: "pi pi-exclamation-triangle",
                 accept: async () => {
-                    try{
+                    try {
                         await this.backendRepository.deleteBlockById(blockId)
                         this.toast.add({
                             severity: "success",
@@ -270,10 +270,10 @@ export default class ContentService {
                             life: 3000,
                         });
 
-                        if(redirectBack) {
+                        if (redirectBack) {
                             router.back()
                         }
-                        
+
                     } catch (e) {
                         this.toast.add({
                             severity: "error",
@@ -295,7 +295,27 @@ export default class ContentService {
 
 
         };
-        return {confirmDelete}
+        return { confirmDelete }
+    }
+
+    public getEmptyBlock() {
+        return {
+            id: '',
+            isEnable: 1,
+            name: '',
+            title: '',
+            blockTypeId: '',
+            pageTypeId: '',
+            positionId: '',
+            items: []
+        }
+    }
+
+    public saveBlock() {
+        const save = async (form, redirectBack = false) => {
+            console.log(form)
+        };
+        return { save };
     }
 
     private async getBlockDictOptions() {

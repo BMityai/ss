@@ -14,7 +14,6 @@ import System from '@/views/Pages/adminhtml/Dashboard/System/Index.vue'
 import Blocks from '@/views/Pages/adminhtml/Dashboard/Content/Block/Blocks.vue'
 import BlockEditForm from '@/views/Pages/adminhtml/Dashboard/Content/Block/Edit.vue'
 import { notAuth, auth, showAsActiveSectionInSidebar } from '@/app/Middleware/adminhtml/Middleware'
-import router from ".";
 
 
 
@@ -124,7 +123,13 @@ export default class AdminRouter {
                                         name: 'blockEdit',
                                         components: { contentLayout: BlockEditForm },
                                         props: true
-                                    }
+                                    },
+                                    {
+                                        path: 'block/create/',
+                                        name: 'blockCreate',
+                                        components: { contentLayout: BlockEditForm },
+                                    },
+
                                 ]
                             },
                             {
