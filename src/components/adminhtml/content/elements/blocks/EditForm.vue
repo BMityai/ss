@@ -56,7 +56,7 @@
                                 <Dropdown
                                     :filter="true"
                                     v-model="form.value.blockId"
-                                    :options="contentBlockOptions.blockOptions"
+                                    :options="blockOptions"
                                     optionLabel="value"
                                     optionValue="id"
                                     placeholder="Select a block"
@@ -71,9 +71,7 @@
                                 <Dropdown
                                     :filter="true"
                                     v-model="form.value.pageTypeId"
-                                    :options="
-                                        contentBlockOptions.pageTypeOptions
-                                    "
+                                    :options="pageTypeOptions"
                                     optionLabel="value"
                                     optionValue="id"
                                     placeholder="Select a type"
@@ -89,9 +87,7 @@
                                     :filter="true"
                                     v-model="form.value.positionId"
                                     :options="
-                                        contentBlockOptions.positionOptions[
-                                            form.value.pageTypeId
-                                        ]
+                                        positionOptions[form.value.pageTypeId]
                                     "
                                     optionLabel="value"
                                     optionValue="id"
@@ -102,7 +98,6 @@
                     </div>
                 </AccordionTab>
                 <AccordionTab header="Block Items Configuration">
-                   
                     <DataTable
                         :value="form.value.items"
                         :reorderableColumns="false"
@@ -131,12 +126,23 @@
                             header="Image"
                         >
                             <template #body="{ data }">
-                                <Image :src="data.image" alt="Image" preview v-if="data.image"/>
-                                <img class="p-image" src="@/assets/frontend/images/service/adminhtml/placeholder.png" v-if="!data.image || data.image === ''" alt="">
+                                <Image
+                                    :src="data.image"
+                                    alt="Image"
+                                    preview
+                                    v-if="data.image"
+                                />
+                                <img
+                                    class="p-image"
+                                    src="@/assets/frontend/images/service/adminhtml/placeholder.png"
+                                    v-if="!data.image || data.image === ''"
+                                    alt=""
+                                />
                                 <input
                                     type="file"
                                     hidden
                                     ref="fileInput"
+                                    accept="image/*"
                                     @change="onUpload"
                                 />
                                 <Button
@@ -159,7 +165,7 @@
                                     type="button"
                                     icon="pi pi-trash"
                                     :data-block-id="data.id"
-                                    @click="deteItem(data)"
+                                    @click="deleteItem(data)"
                                     class="p-button-danger"
                                 /> </template
                         ></Column>
@@ -214,14 +220,13 @@ export default defineComponent({
         if (props.blockId) {
             form.value = await contentService.getBlockById(props.blockId);
         }
-        const contentBlockOptions = await contentService.getBlockDictOptions();
 
-        const enableOptions = ref([
-            { label: "Enable", value: 1 },
-            { label: "Disable", value: 0 },
-        ]);
-
-        console.log(contentBlockOptions);
+        const {
+            enableOptions,
+            blockOptions,
+            pageTypeOptions,
+            positionOptions,
+        } = await contentService.getOptionsForSelectField();
 
         const columns = ref([
             { field: "url", header: "Url" },
@@ -229,64 +234,26 @@ export default defineComponent({
         ]);
 
         const onRowReorder = (event) => {
-            console.log(event.value); // @todo Установить значение position в зависимости порядка в массиве
             form.value.items = event.value;
         };
 
-        const onUpload = (event) => {
-            const file = event.target.files[0];
-            const allowedFormats = ["jpg", "jpeg", "png", "gif"];
-            const typeSplit = file["type"].split("/");
-            if (
-                typeSplit[0] !== "image" ||
-                !allowedFormats.includes(typeSplit[1])
-            ) {
-                fileInput.value = null;
-                return;
-            }
+        const {
+            onUpload,
+            selectItem,
+            fileInput
+        } = contentService.imageUploadProcessing(form);
 
-            for (const item of form.value.items) {
-                if (item.id !== editedItemId.value) {
-                    continue;
-                }
-                console.log(item);
-                item.image = window.URL.createObjectURL(event.target.files[0]);
-            }
-        };
+        const {
+            addItem,
+            deleteItem
+        } = contentService.itemsCrudProcessing(form)
 
-        const editedItemId = ref();
-
-        const selectItem = (item) => {
-            console.log(item);
-            editedItemId.value = item.id;
-        };
-
-        const fileInput = ref();
-
-        const addItem = () => {
-            console.log({
-                id: "new-item-" + Date.now(),
-                image: "",
-                position: "",
-                url: "",
-            });
-            form.value.items.push({
-                id: "new-item-" + Date.now(),
-                image: "",
-                position: "",
-                url: "",
-            });
-        };
-
-        const deteItem = (item) => {
-            
-            const itemIndex = form.value.items.indexOf(item);
-            form.value.items.splice(itemIndex, 1);
-        }
 
         return {
             form,
-            contentBlockOptions,
+            blockOptions,
+            pageTypeOptions,
+            positionOptions,
             enableOptions,
             columns,
             onRowReorder,
@@ -294,7 +261,7 @@ export default defineComponent({
             selectItem,
             fileInput,
             addItem,
-            deteItem
+            deleteItem,
         };
     },
 });

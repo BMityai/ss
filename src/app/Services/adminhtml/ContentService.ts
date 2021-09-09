@@ -150,11 +150,96 @@ export default class AdminUserService {
         }
     }
 
+    /**
+     * Get options for select field
+     */
+    public async getOptionsForSelectField() {
+        const enableOptions = ref([
+            { label: "Enable", value: 1 },
+            { label: "Disable", value: 0 },
+        ]);
+        const contentBlockOptions = await this.getBlockDictOptions() as any; // @todo typecast
+        const blockOptions = contentBlockOptions.blockOptions;
+        const pageTypeOptions = contentBlockOptions.pageTypeOptions
+        const positionOptions = contentBlockOptions.positionOptions
+        return {
+            enableOptions,
+            blockOptions,
+            pageTypeOptions,
+            positionOptions
+        }
+    }
+
+    /**
+     * Image upload to items
+     */
+    public imageUploadProcessing(form) {  //@todo typecast
+        
+        const onUpload = (event) => {
+            const file = event.target.files[0];
+            const allowedFormats = ["jpg", "jpeg", "png", "gif"];
+            const typeSplit = file["type"].split("/");
+            if (
+                typeSplit[0] !== "image" ||
+                !allowedFormats.includes(typeSplit[1])
+            ) {
+                fileInput.value.value = null;
+                return;
+            }
+
+            for (const item of form.value.items) {
+                if (item.id !== editedItemId.value) {
+                    continue;
+                }
+                item.image = window.URL.createObjectURL(event.target.files[0]);
+            }
+        };
+
+        const editedItemId = ref();
+        const selectItem = (item) => {
+            editedItemId.value = item.id;
+        };
+
+        const fileInput = ref();
+        return {
+            onUpload,
+            selectItem,
+            fileInput
+        }
+    }
+
+    /**
+     * Content Block items create & delete actions
+     */
+    public itemsCrudProcessing(form) { //@todo typecast
+
+        const addItem = () => {
+            form.value.items.push({
+                id: "new-item-" + Date.now(),
+                image: "",
+                position: "",
+                url: "",
+            });
+        };
+
+        const deleteItem = (item) => { //@todo typecast
+            console.log(form)
+
+            const itemIndex = form.value.items.indexOf(item);
+            form.value.items.splice(itemIndex, 1);
+        };
+
+        return {
+            addItem,
+            deleteItem
+        };
+    }
+
     public async getBlockById(blockId: string) {
         return await this.backendRepository.getBlockById(blockId);
     }
 
-    public async getBlockDictOptions() {
+    private async getBlockDictOptions() {
         return await this.backendRepository.getBlockDictOptions();
     }
 
