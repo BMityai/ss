@@ -33,7 +33,7 @@ export default class AdminRouter {
                 component: AdminPanelLayout,
                 meta: {
                     middleware: [
-                        'test'
+                        'test' //@todo
                     ]
                 },
                 children: [

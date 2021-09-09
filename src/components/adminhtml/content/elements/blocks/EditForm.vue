@@ -1,9 +1,40 @@
 <template>
     <div class="edit_form">
         <h2>Edit form "{{ form.value.name }}"</h2>
+        <div class="actions">
+            <div class="left_panel">
+                <Button
+                    icon="pi pi-arrow-left"
+                    label="Back"
+                    class="p-button-raised p-button-secondary"
+                    @click="router.go(-1)"
+                />
+            </div>
+
+            <div class="right_panel">
+                <Button
+                    icon="pi pi-trash"
+                    label="Delete"
+                    class="p-button-raised p-button-danger"
+                    @click="confirmDelete(form.value.id)"
+                />
+
+                <Button
+                    icon="pi pi-upload"
+                    label="Save and continue"
+                    class="p-button-raised p-button-raised"
+                />
+
+                <Button
+                    icon="pi pi-save"
+                    label="Save"
+                    class="p-button-raised p-button-success"
+                />
+            </div>
+        </div>
 
         <div class="form">
-            <Accordion :activeIndex="[0]" :multiple="true">
+            <Accordion :multiple="true">
                 <AccordionTab header="General Configuration">
                     <div class="general">
                         <!-- enable -->
@@ -195,6 +226,9 @@ import DataTable from "primevue/datatable";
 import Column from "primevue/column";
 import Button from "primevue/button";
 import Image from "primevue/image";
+import router from "@/router";
+
+import FormValidateHelper from "@/app/Helpers/FormValidateHelper";
 
 export default defineComponent({
     props: {
@@ -237,17 +271,13 @@ export default defineComponent({
             form.value.items = event.value;
         };
 
-        const {
-            onUpload,
-            selectItem,
-            fileInput
-        } = contentService.imageUploadProcessing(form);
+        const { onUpload, selectItem, fileInput } =
+            contentService.imageUploadProcessing(form);
 
-        const {
-            addItem,
-            deleteItem
-        } = contentService.itemsCrudProcessing(form)
+        const { addItem, deleteItem } =
+            contentService.itemsCrudProcessing(form);
 
+        const { confirmDelete } = contentService.blockDeleteProcessing(true);
 
         return {
             form,
@@ -262,6 +292,8 @@ export default defineComponent({
             fileInput,
             addItem,
             deleteItem,
+            router,
+            confirmDelete,
         };
     },
 });

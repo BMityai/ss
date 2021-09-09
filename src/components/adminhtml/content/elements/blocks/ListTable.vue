@@ -1,6 +1,4 @@
 <template>
-    <Toast />
-
     <div>
         <DataTable
             :value="blocks"
@@ -49,6 +47,7 @@
                                 label="Delete"
                                 icon="pi pi-trash"
                                 class="p-button-danger"
+                                v-if="selectedBlocks && selectedBlocks.length"
                             />
                         </div>
                     </div>
@@ -238,7 +237,7 @@
                                 label="Delete"
                                 class="p-button-danger"
                                 icon="pi pi-trash"
-                                @click="confirmDelete"
+                                @click="confirmDelete(editableBlockId)"
                             />
                         </div>
                     </OverlayPanel>
@@ -252,17 +251,13 @@
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
 import ContentService from "@/app/Services/adminhtml/ContentService";
-import Toast from "primevue/toast";
 import Button from "primevue/button";
 import OverlayPanel from "primevue/overlaypanel";
-import { useToast } from "primevue/usetoast";
-import { useConfirm } from "primevue/useconfirm";
 
 import InputText from "primevue/inputtext";
 
 export default {
     components: {
-        Toast,
         DataTable,
         Column,
         InputText,
@@ -271,8 +266,6 @@ export default {
     },
     async setup() {
         const contentService = new ContentService();
-        const toast = useToast();
-        const confirm = useConfirm();
 
         const {
             dt,
@@ -288,34 +281,11 @@ export default {
             clearFilter,
             op,
             edit,
-            blockEditAction
+            blockEditAction,
+            editableBlockId
         } = await contentService.getBlocksTable();
 
-        const confirmDelete = () => {
-            confirm.require({
-                message: "Are you sure you want to delete this block?",
-                header: "Confirmation",
-                icon: "pi pi-exclamation-triangle",
-                accept: () => {
-                    toast.add({
-                        severity: "info",
-                        summary: "Confirmed",
-                        detail: "You have accepted",
-                        life: 3000,
-                    });
-                },
-                reject: () => {
-                    toast.add({
-                        severity: "error",
-                        summary: "Rejected",
-                        detail: "You have rejected",
-                        life: 3000,
-                    });
-                },
-            });
-
-        };
-
+        const { confirmDelete } = contentService.blockDeleteProcessing();
         return {
             dt,
             loading,
@@ -331,7 +301,8 @@ export default {
             op,
             confirmDelete,
             edit,
-            blockEditAction
+            blockEditAction,
+            editableBlockId
         };
     },
 };

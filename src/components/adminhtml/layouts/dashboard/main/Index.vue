@@ -1,4 +1,6 @@
 <template>
+    <Toast position="bottom-right"/>
+
     <div class="adminhtml-page">
         <!-- HEADER -->
         <Suspense>
@@ -23,11 +25,14 @@ import { defineComponent } from "vue";
 import { isAuth, user } from "@/app/Repositories/states/AdminUserState";
 import Header from "@/components/adminhtml/layouts/dashboard/main/header/Index.vue";
 import Sidebar from "@/components/adminhtml/layouts/dashboard/main/sidebar/Index.vue";
+import Toast from "primevue/toast";
+
 
 export default defineComponent({
     components: {
         Header,
         Sidebar,
+        Toast,
     },
     setup() {
 
