@@ -16,6 +16,7 @@
                 <Button
                     icon="pi pi-trash"
                     label="Delete"
+                    v-if="blockId"
                     class="p-button-raised p-button-danger"
                     @click="confirmDelete(form.value.id)"
                 />

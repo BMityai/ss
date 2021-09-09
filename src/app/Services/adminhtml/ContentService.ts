@@ -304,7 +304,7 @@ export default class ContentService {
             isEnable: 1,
             name: '',
             title: '',
-            blockTypeId: '',
+            blockId: '',
             pageTypeId: '',
             positionId: '',
             items: []
@@ -313,6 +313,11 @@ export default class ContentService {
 
     public saveBlock() {
         const save = async (form, redirectBack = false) => {
+            try {
+                await this.backendRepository.saveContentBlock(form)
+            } catch (e) {
+                alert(e)
+            }
             console.log(form)
         };
         return { save };
