@@ -33,7 +33,8 @@ export default class BackendRepositoryClient {
         if (headers === null) {
             return { token: cookie.value };
         } else {
-            return headers.token = cookie.value;
+            headers.token = cookie.value;
+            return headers
         }
     }
 }
