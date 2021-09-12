@@ -1,5 +1,5 @@
 
-export default interface AuthRepositoryInterface {
+export default interface ContentRepositoryInterface {
 
 
 }

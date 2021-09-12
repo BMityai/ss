@@ -4,7 +4,7 @@ import BackendExceptionsHandleHelper from "@/app/Helpers/BackendExceptionsHadleH
 import { FilterMatchMode, FilterOperator } from "primevue/api";
 import router from '@/router';
 import { useConfirm } from "primevue/useconfirm";
-
+import UploadRepository from '@/app/Repositories/adminhtml/Uploader/UploadRepository';
 
 
 import { ref, onMounted } from "vue";
@@ -16,12 +16,14 @@ export default class ContentService {
 
     protected backendRepository: ContentRepository;
     protected exceptionHandleHelper: BackendExceptionsHandleHelper;
+    protected uploadRepository: UploadRepository;
     protected confirm: ConfirmationServiceMethods;
     protected toast: ToastServiceMethods;
 
     constructor() {
         this.backendRepository = new ContentRepository();
         this.exceptionHandleHelper = new BackendExceptionsHandleHelper();
+        this.uploadRepository = new UploadRepository();
         this.confirm = useConfirm();
         this.toast = useToast();
 
@@ -196,13 +198,24 @@ export default class ContentService {
                 !allowedFormats.includes(typeSplit[1])
             ) {
                 fileInput.value.value = null;
-                return;
+                return; //@todo validate
             }
 
             for (const item of form.value.items) {
                 if (item.id !== editedItemId.value) {
                     continue;
                 }
+
+                // const image = ref();
+                // const reader = new FileReader();
+                // reader.onload = (e) => {
+                //     image.value = e.target?.result;
+                //     this.uploadRepository.uploadFile(image);
+                // }
+                // reader.readAsDataURL(file);
+
+
+                const newSrc = this.uploadRepository.uploadFile(file);
                 item.image = window.URL.createObjectURL(event.target.files[0]);
             }
         };
@@ -312,7 +325,10 @@ export default class ContentService {
     }
 
     public saveBlock() {
+        
+
         const save = async (form, redirectBack = false) => {
+
             try {
                 await this.backendRepository.saveContentBlock(form)
             } catch (e) {
