@@ -17,7 +17,7 @@ export default class UploadRepository implements UploadRepositoryInterface {
     /**
      * Upload image
      */
-    public async uploadFile(file) {
+    public async uploadFile(file) {``
 
         const fd = new FormData();
         fd.append('file', file);
