@@ -1,7 +1,8 @@
 
 import BackendRepositoryClient from "../../BackendRepositoryClient";
 import UploadRepositoryInterface from "./UploadRepositoryInterface";
-
+import FormData from 'form-data'
+import axios from "axios";
 export default class UploadRepository implements UploadRepositoryInterface {
 
     private adminUrl: string;
@@ -17,13 +18,9 @@ export default class UploadRepository implements UploadRepositoryInterface {
     /**
      * Upload image
      */
-    public async uploadFile(file) {``
-
-        const fd = new FormData();
-        fd.append('file', file);
-        const headers = {
-            'Content-Type':'multipart/form-data' 
-        }
-        return await this.client.fetch(`${this.adminUrl}${this.uploadUrl}`, 'POST', null, file.value);
+    public uploadFile(file) {
+        const formData = new FormData();
+        formData.append('file', file);
+        return this.client.fetch(`${this.adminUrl}${this.uploadUrl}`, 'POST', null, formData);
     }
 }

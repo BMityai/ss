@@ -12,7 +12,7 @@
         appendTo="body"
         id="admin_account_overlay_panel"
         :breakpoints="{}"
-        :style="{ right: '20px' }"
+        :style="{ right: '20px'}"
     >
         <router-link :to="{ name: 'dashboard' }" class="item">
             <svg>

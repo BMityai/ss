@@ -25,14 +25,14 @@
                     icon="pi pi-upload"
                     label="Save and continue"
                     class="p-button-raised p-button-raised"
-                    @click="save(form.value)"
+                    @click="handleSubmit(form.value)"
                 />
 
                 <Button
                     icon="pi pi-save"
                     label="Save"
                     class="p-button-raised p-button-success"
-                    @click="save(form.value, true)"
+                    @click="handleSubmit(form.value, true)"
                 />
             </div>
         </div>
@@ -42,7 +42,7 @@
                 <AccordionTab header="General Configuration">
                     <div class="general">
                         <!-- enable -->
-                        <div class="field name">
+                        <div class="field enable">
                             <div class="layout">Enable</div>
                             <div class="value">
                                 <SelectButton
@@ -63,9 +63,25 @@
                                         id="name"
                                         type="text"
                                         v-model="form.value.name"
+                                        :class="{
+                                            invalid:
+                                                isSubmit &&
+                                                !validatorResponse.name.isValid,
+                                        }"
                                     />
+
                                     <label for="name">Name</label>
                                 </span>
+
+                                <small
+                                    class="p-error"
+                                    v-if="
+                                        isSubmit &&
+                                        !validatorResponse.name.isValid
+                                    "
+                                >
+                                    {{ validatorResponse.name.message }}
+                                </small>
                             </div>
                         </div>
 
@@ -78,9 +94,23 @@
                                         id="title"
                                         type="text"
                                         v-model="form.value.title"
+                                        :class="{
+                                            invalid:
+                                                isSubmit &&
+                                                !validatorResponse.title.isValid,
+                                        }"
                                     />
                                     <label for="name">Title</label>
                                 </span>
+                                <small
+                                    class="p-error"
+                                    v-if="
+                                        isSubmit &&
+                                        !validatorResponse.title.isValid
+                                    "
+                                >
+                                    {{ validatorResponse.title.message }}
+                                </small>
                             </div>
                         </div>
 
@@ -232,8 +262,6 @@ import Button from "primevue/button";
 import Image from "primevue/image";
 import router from "@/router";
 
-import FormValidateHelper from "@/app/Helpers/FormValidateHelper";
-
 export default defineComponent({
     props: {
         // blockId: [String, null]
@@ -254,6 +282,7 @@ export default defineComponent({
     async setup(props) {
         const contentService = new ContentService();
         const form = reactive({});
+        const isSubmit = ref(false);
 
         if (props.blockId) {
             form.value = await contentService.getBlockById(props.blockId);
@@ -285,6 +314,18 @@ export default defineComponent({
 
         const { confirmDelete } = contentService.blockDeleteProcessing(true);
         const { save } = contentService.saveBlock();
+
+        const { validatorResponse, formIsValid } = contentService.validateForm(
+            form.value
+        );
+
+        const handleSubmit = (form, redirectBack) => {
+            isSubmit.value = true;
+            if (formIsValid.value) {
+                save(form, redirectBack);
+            }
+        };
+
         return {
             form,
             blockOptions,
@@ -300,7 +341,9 @@ export default defineComponent({
             deleteItem,
             router,
             confirmDelete,
-            save,
+            handleSubmit,
+            validatorResponse,
+            isSubmit,
         };
     },
 });

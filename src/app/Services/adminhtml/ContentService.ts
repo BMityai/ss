@@ -5,9 +5,9 @@ import { FilterMatchMode, FilterOperator } from "primevue/api";
 import router from '@/router';
 import { useConfirm } from "primevue/useconfirm";
 import UploadRepository from '@/app/Repositories/adminhtml/Uploader/UploadRepository';
+import { validate } from '@/app/Helpers/ValidateHelper';
 
-
-import { ref, onMounted } from "vue";
+import { ref, reactive, onMounted, watch } from "vue";
 import { ConfirmationServiceMethods } from 'primevue/confirmationservice';
 import { ToastServiceMethods } from 'primevue/toastservice';
 
@@ -26,9 +26,6 @@ export default class ContentService {
         this.uploadRepository = new UploadRepository();
         this.confirm = useConfirm();
         this.toast = useToast();
-
-
-
     }
 
     public async getBlocksTable() {
@@ -106,8 +103,7 @@ export default class ContentService {
             loading.value = true;
             lazyParams.value.globalFilterFields = dt.value.globalFilterFields;
             const data = await this.getBlocks(
-                lazyParams.value,
-                this.toast
+                lazyParams.value
             );
             blocks.value = data.blocks;
             totalRecords.value = data.totalBlocks;
@@ -189,7 +185,7 @@ export default class ContentService {
      */
     public imageUploadProcessing(form) {  //@todo typecast
 
-        const onUpload = (event) => {
+        const onUpload = async (event) => {
             const file = event.target.files[0];
             const allowedFormats = ["jpg", "jpeg", "png", "gif"];
             const typeSplit = file["type"].split("/");
@@ -198,6 +194,13 @@ export default class ContentService {
                 !allowedFormats.includes(typeSplit[1])
             ) {
                 fileInput.value.value = null;
+                this.toast.add({
+                    severity: "error",
+                    summary: "Upload image",
+                    detail: "Wrong file format",
+                    life: 3000,
+                });
+
                 return; //@todo validate
             }
 
@@ -206,17 +209,10 @@ export default class ContentService {
                     continue;
                 }
 
-                // const image = ref();
-                // const reader = new FileReader();
-                // reader.onload = (e) => {
-                //     image.value = e.target?.result;
-                //     this.uploadRepository.uploadFile(image);
-                // }
-                // reader.readAsDataURL(file);
+                item.file = file;
 
-
-                const newSrc = this.uploadRepository.uploadFile(file);
-                item.image = window.URL.createObjectURL(event.target.files[0]);
+                const newSrc = await this.uploadRepository.uploadFile(file);
+                item.image = newSrc;
             }
         };
 
@@ -260,12 +256,15 @@ export default class ContentService {
     }
 
     /**
-     * 
+     * Get block by id
      */
     public async getBlockById(blockId: string) {
         return await this.backendRepository.getBlockById(blockId);
     }
 
+    /**
+     * Delete block
+     */
     public blockDeleteProcessing(redirectBack = false) {
 
         const confirmDelete = (blockId) => {
@@ -311,6 +310,9 @@ export default class ContentService {
         return { confirmDelete }
     }
 
+    /**
+     * Get empty block
+     */
     public getEmptyBlock() {
         return {
             id: '',
@@ -324,11 +326,34 @@ export default class ContentService {
         }
     }
 
+    /**
+     * Validate form
+     */
+    public validateForm(form) {
+        const rules = {
+            isEnable: 1,
+            name: {
+                required: true,
+                minLength: 4
+            },
+            title: {
+                required: true,
+                minLength: 4
+            },
+            blockId: '',
+            pageTypeId: '',
+            positionId: '',
+        }
+        const { validatorResponse, formIsValid } = validate(form, rules);
+
+        return { validatorResponse, formIsValid };
+    }
+
+    /**
+     * Save block
+     */
     public saveBlock() {
-        
-
         const save = async (form, redirectBack = false) => {
-
             try {
                 await this.backendRepository.saveContentBlock(form)
             } catch (e) {
@@ -339,15 +364,26 @@ export default class ContentService {
         return { save };
     }
 
+    /**
+     * Get block dict options
+     */
     private async getBlockDictOptions() {
-        return await this.backendRepository.getBlockDictOptions();
+        try {
+
+            return await this.backendRepository.getBlockDictOptions();
+        } catch (e) {
+            this.exceptionHandleHelper.defaultHandle(e, this.toast);
+        }
     }
 
-    private async getBlocks(params, toast): Promise<any> {
+    /**
+     * Get blocks
+     */
+    private async getBlocks(params): Promise<any> {
         try {
             return await this.backendRepository.getBlocks(params);
         } catch (e) {
-            this.exceptionHandleHelper.defaultHandle(e, toast);
+            this.exceptionHandleHelper.defaultHandle(e, this.toast);
         }
     }
 }

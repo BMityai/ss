@@ -99,15 +99,17 @@
 </template>
 
 <script lang='ts'>
-import { defineComponent, reactive } from "vue";
+import { defineComponent, reactive, ref } from "vue";
 import InputText from "primevue/inputtext";
 import Button from "primevue/button";
 import Toast from "primevue/toast";
-import Validator from "@/app/Helpers/FormValidateHelper";
 import AuthRepository from "@/app/Repositories/adminhtml/Auth/AuthRepository";
 import BackendExceptionsHandleHelper from "@/app/Helpers/BackendExceptionsHadleHelper";
 import router from "@/router";
+import { useVuelidate } from "@vuelidate/core";
+import { required, minLength, helpers } from "@vuelidate/validators";
 import { authAdminUser } from "@/app/Repositories/states/AdminUserState";
+import { useToast } from "primevue/usetoast";
 
 export default defineComponent({
     components: {
@@ -116,8 +118,6 @@ export default defineComponent({
         Toast,
     },
     async setup() {
-        // Init Validator helper
-        const validatorHelper = new Validator();
 
         // Prepare fields
         const state = reactive({
@@ -128,25 +128,38 @@ export default defineComponent({
         // Prepare rules for fields
         const rules = {
             login: {
-                required: validatorHelper.required(),
-                minLength: validatorHelper.minLength(4),
+                required: required,
+                minLength: minLength(4),
             },
             password: {
-                required: validatorHelper.required(),
-                minLength: validatorHelper.minLength(6),
+                required: required,
+                minLength: minLength(6),
             },
         };
 
-        // Configure validator
-        validatorHelper.init(state, rules, true);
+        // Set submited value
+        const submitted = ref(false);
 
-        // Cet validateor
-        const validator = validatorHelper.getValidator();
+        // Validate
+        const v$ = useVuelidate(rules, state);
+
+        // Init toast
+        const toast = useToast();
 
         const handleSubmit = async () => {
             const repository = new AuthRepository();
-            const isValid = validator.handleSubmit();
-            if(!isValid) {
+            // Submit method
+            submitted.value = true;
+            if (v$.value.$invalid && useToast) {
+                toast.add({
+                    severity: "error",
+                    summary: "Ошибка",
+                    detail: "Проверьте правильность запонения формы",
+                    life: 3000,
+                });
+            }
+            const isValid = !v$.value.$invalid;
+            if (!isValid) {
                 return;
             }
             try {
@@ -155,14 +168,14 @@ export default defineComponent({
                 router.push({ name: "dashboard" });
             } catch (e) {
                 const handler = new BackendExceptionsHandleHelper();
-                handler.adminAuthExceptionsHandle(e, validator.toast);
+                handler.adminAuthExceptionsHandle(e, toast);
             }
         };
 
         return {
-            v$: validator.v$,
-            handleSubmit: handleSubmit,
-            submitted: validator.submitted,
+            v$,
+            handleSubmit,
+            submitted
         };
     },
 });
