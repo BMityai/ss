@@ -33,8 +33,8 @@ export default class ContentRepository implements ContentRepositoryInterface {
         return await this.client.fetch(`${this.adminUrl}/content/block/save`, 'POST', form);
     }
 
-    public async getBlockDictOptions() {
-        return await this.client.fetch(`${this.adminUrl}/content/block_dict/options`, 'GET');
+    public async getBlockOptions() {
+        return await this.client.fetch(`${this.adminUrl}/content/block_options`, 'GET');
     }
 
 }

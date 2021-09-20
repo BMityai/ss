@@ -1,6 +1,9 @@
 <template>
     <div class="edit_form">
-        <h2 v-if="blockId">Edit block "{{ form.value.name }}"</h2>
+        <div v-if="blockId">
+            <h2>Edit block "{{ form.value.name }}"</h2>
+        </div>
+
         <h2 v-else>New block</h2>
         <div class="actions">
             <div class="left_panel">
@@ -8,7 +11,7 @@
                     icon="pi pi-arrow-left"
                     label="Back"
                     class="p-button-raised p-button-secondary"
-                    @click="router.go(-1)"
+                    @click="router.back()"
                 />
             </div>
 
@@ -40,7 +43,7 @@
         <div class="form">
             <Accordion :multiple="true">
                 <AccordionTab header="General Configuration">
-                    <div class="general">
+                    <div class="tab general">
                         <!-- enable -->
                         <div class="field enable">
                             <div class="layout">Enable</div>
@@ -97,7 +100,8 @@
                                         :class="{
                                             invalid:
                                                 isSubmit &&
-                                                !validatorResponse.title.isValid,
+                                                !validatorResponse.title
+                                                    .isValid,
                                         }"
                                     />
                                     <label for="name">Title</label>
@@ -125,7 +129,23 @@
                                     optionLabel="value"
                                     optionValue="id"
                                     placeholder="Select a block"
+                                    @change="form.value.items = []"
+                                    :class="{
+                                        invalid:
+                                            isSubmit &&
+                                            !validatorResponse.blockId.isValid,
+                                    }"
                                 />
+                                <small
+                                    class="p-error"
+                                    style="display: block"
+                                    v-if="
+                                        isSubmit &&
+                                        !validatorResponse.blockId.isValid
+                                    "
+                                >
+                                    {{ validatorResponse.blockId.message }}
+                                </small>
                             </div>
                         </div>
 
@@ -140,7 +160,23 @@
                                     optionLabel="value"
                                     optionValue="id"
                                     placeholder="Select a type"
+                                    :class="{
+                                        invalid:
+                                            isSubmit &&
+                                            !validatorResponse.pageTypeId
+                                                .isValid,
+                                    }"
                                 />
+                                <small
+                                    class="p-error"
+                                    style="display: block"
+                                    v-if="
+                                        isSubmit &&
+                                        !validatorResponse.pageTypeId.isValid
+                                    "
+                                >
+                                    {{ validatorResponse.pageTypeId.message }}
+                                </small>
                             </div>
                         </div>
 
@@ -157,18 +193,53 @@
                                     optionLabel="value"
                                     optionValue="id"
                                     placeholder="Select a position"
+                                    :class="{
+                                        invalid:
+                                            isSubmit &&
+                                            !validatorResponse.positionId
+                                                .isValid,
+                                    }"
                                 />
+                                <small
+                                    class="p-error"
+                                    style="display: block"
+                                    v-if="
+                                        isSubmit &&
+                                        !validatorResponse.positionId.isValid
+                                    "
+                                >
+                                    {{ validatorResponse.positionId.message }}
+                                </small>
                             </div>
                         </div>
                     </div>
                 </AccordionTab>
-                <AccordionTab header="Block Items Configuration">
+                <AccordionTab
+                    header="Block Items Configuration"
+                    v-if="form.value.blockId"
+                >
+                    <!-- add images -->
+
                     <DataTable
                         :value="form.value.items"
                         :reorderableColumns="false"
                         @rowReorder="onRowReorder"
                         responsiveLayout="scroll"
+                        v-if="
+                            form.value.blockId === 1 || form.value.blockId === 2
+                        "
+                        :class="{
+                            invalid:
+                                isSubmit && !validatorResponse.items.isValid,
+                        }"
                     >
+                        <small
+                            class="p-error"
+                            style="display: block"
+                            v-if="isSubmit && !validatorResponse.items.isValid"
+                        >
+                            {{ validatorResponse.items.message }}
+                        </small>
                         <Column :rowReorder="true"> </Column>
                         <Column
                             field="url"
@@ -240,7 +311,48 @@
                             label="Add Item"
                             class="p-button-raised p-button-success"
                             @click="addItem"
+                            v-if="
+                                form.value.blockId === 1 ||
+                                form.value.blockId === 2
+                            "
                         />
+                    </div>
+
+                    <div class="tab">
+                        <div
+                            class="field attribute_set"
+                            v-if="
+                                form.value.blockId === 3 ||
+                                form.value.blockId === 4
+                            "
+                        >
+                            <div class="layout">Attribute Set</div>
+                            <div class="value">
+                                <MultiSelect
+                                    v-model="form.value.items"
+                                    :options="attributeSetOptions"
+                                    optionLabel="title"
+                                    optionValue="id"
+                                    placeholder="Select Attribute Set"
+                                    :filter="true"
+                                    :class="{
+                                        invalid:
+                                            isSubmit &&
+                                            !validatorResponse.items.isValid,
+                                    }"
+                                />
+                                <small
+                                    class="p-error"
+                                    style="display: block"
+                                    v-if="
+                                        isSubmit &&
+                                        !validatorResponse.items.isValid
+                                    "
+                                >
+                                    {{ validatorResponse.items.message }}
+                                </small>
+                            </div>
+                        </div>
                     </div>
                 </AccordionTab>
             </Accordion>
@@ -261,6 +373,8 @@ import Column from "primevue/column";
 import Button from "primevue/button";
 import Image from "primevue/image";
 import router from "@/router";
+import { useToast } from "primevue/usetoast";
+import MultiSelect from "primevue/multiselect";
 
 export default defineComponent({
     props: {
@@ -277,9 +391,11 @@ export default defineComponent({
         Column,
         Button,
         Image,
+        MultiSelect,
     },
 
     async setup(props) {
+        const toast = useToast();
         const contentService = new ContentService();
         const form = reactive({});
         const isSubmit = ref(false);
@@ -295,8 +411,8 @@ export default defineComponent({
             blockOptions,
             pageTypeOptions,
             positionOptions,
+            attributeSetOptions,
         } = await contentService.getOptionsForSelectField();
-
         const columns = ref([
             { field: "url", header: "Url" },
             { field: "image", header: "Image" },
@@ -321,9 +437,20 @@ export default defineComponent({
 
         const handleSubmit = (form, redirectBack) => {
             isSubmit.value = true;
-            if (formIsValid.value) {
-                save(form, redirectBack);
+
+            console.log(validatorResponse);
+
+            if (!formIsValid.value || !form.items.length) {
+                toast.add({
+                    severity: "error",
+                    summary: "Validation error",
+                    detail: "Check if the form is filled out correctly",
+                    life: 3000,
+                });
+                return;
             }
+
+            save(form, redirectBack);
         };
 
         return {
@@ -344,6 +471,7 @@ export default defineComponent({
             handleSubmit,
             validatorResponse,
             isSubmit,
+            attributeSetOptions,
         };
     },
 });

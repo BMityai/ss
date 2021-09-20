@@ -168,15 +168,17 @@ export default class ContentService {
             { label: "Enable", value: 1 },
             { label: "Disable", value: 0 },
         ]);
-        const contentBlockOptions = await this.getBlockDictOptions() as any; // @todo typecast
+        const contentBlockOptions = await this.getBlockOptions() as any; // @todo typecast
         const blockOptions = contentBlockOptions.blockOptions;
-        const pageTypeOptions = contentBlockOptions.pageTypeOptions
-        const positionOptions = contentBlockOptions.positionOptions
+        const pageTypeOptions = contentBlockOptions.pageTypeOptions;
+        const positionOptions = contentBlockOptions.positionOptions;
+        const attributeSetOptions = contentBlockOptions.attributeSetOptions;
         return {
             enableOptions,
             blockOptions,
             pageTypeOptions,
-            positionOptions
+            positionOptions,
+            attributeSetOptions
         }
     }
 
@@ -201,7 +203,7 @@ export default class ContentService {
                     life: 3000,
                 });
 
-                return; //@todo validate
+                return; 
             }
 
             for (const item of form.value.items) {
@@ -235,12 +237,14 @@ export default class ContentService {
     public itemsCrudProcessing(form) { //@todo typecast
 
         const addItem = () => {
-            form.value.items.push({
-                id: "new-item-" + Date.now(),
-                image: "",
-                position: "",
-                url: "",
-            });
+            if(form.value.blockId === 1 || form.value.blockId === 2) {
+                form.value.items.push({
+                    id: "new-item-" + Date.now(),
+                    image: "",
+                    position: "",
+                    url: "",
+                });
+            }
         };
 
         const deleteItem = (item) => { //@todo typecast
@@ -336,13 +340,18 @@ export default class ContentService {
                 required: true,
                 minLength: 4
             },
-            title: {
-                required: true,
-                minLength: 4
+            blockId: {
+                required: true
             },
-            blockId: '',
-            pageTypeId: '',
-            positionId: '',
+            pageTypeId: {
+                required: true
+            },
+            positionId: {
+                required: true
+            },
+            items: {
+                notEmpty: true
+            },
         }
         const { validatorResponse, formIsValid } = validate(form, rules);
 
@@ -354,12 +363,13 @@ export default class ContentService {
      */
     public saveBlock() {
         const save = async (form, redirectBack = false) => {
+
             try {
+
                 await this.backendRepository.saveContentBlock(form)
             } catch (e) {
                 alert(e)
             }
-            console.log(form)
         };
         return { save };
     }
@@ -367,10 +377,9 @@ export default class ContentService {
     /**
      * Get block dict options
      */
-    private async getBlockDictOptions() {
+    private async getBlockOptions() {
         try {
-
-            return await this.backendRepository.getBlockDictOptions();
+            return await this.backendRepository.getBlockOptions();
         } catch (e) {
             this.exceptionHandleHelper.defaultHandle(e, this.toast);
         }

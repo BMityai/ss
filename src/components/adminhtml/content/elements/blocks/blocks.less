@@ -17,7 +17,10 @@
         }
     }
     .form {
-        .general {
+        .invalid {
+            border: 1px solid #e34847;
+        }
+        .tab {
             .field {
                 display: flex;
                 font-size: 16px;
@@ -36,16 +39,16 @@
                     padding: 15px;
 
                     input,
-                    .p-dropdown {
+                    .p-dropdown,
+                    .p-multiselect {
                         width: 100%;
                         max-width: 400px;
                     }
 
-                    .invalid {
-                        border: 1px solid #e34847;
-                    }
+                    
                 }
             }
+
         }
 
         .p-accordion-content {
