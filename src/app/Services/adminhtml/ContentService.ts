@@ -211,8 +211,6 @@ export default class ContentService {
                     continue;
                 }
 
-                item.file = file;
-
                 const newSrc = await this.uploadRepository.uploadFile(file);
                 item.image = newSrc;
             }

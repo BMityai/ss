@@ -249,7 +249,6 @@
                         >
                             <template #body="{ data }">
                                 <InputText
-                                    type="text"
                                     v-model="data.url"
                                     style="width: 100%"
                                 />
