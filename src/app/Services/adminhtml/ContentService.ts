@@ -213,6 +213,7 @@ export default class ContentService {
 
                 const newSrc = await this.uploadRepository.uploadFile(file);
                 item.image = newSrc;
+                item.imageChange = true;
             }
         };
 
@@ -347,9 +348,18 @@ export default class ContentService {
             positionId: {
                 required: true
             },
-            items: {
+        } as any;
+        
+        if(form.blockId == 1 || form.blockId == 2) {
+            rules.items = {
                 notEmpty: true
-            },
+            };
+        }
+
+        if(form.blockId == 3 || form.blockId == 4) {
+            rules.attributeSet = {
+                notEmpty: true
+            };
         }
         const { validatorResponse, formIsValid } = validate(form, rules);
 

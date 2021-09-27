@@ -244,7 +244,6 @@
                         <Column
                             field="url"
                             header="Url"
-                            ref="url"
                             headerStyle="width: 50%; text-align:center"
                         >
                             <template #body="{ data }">
@@ -328,7 +327,7 @@
                             <div class="layout">Attribute Set</div>
                             <div class="value">
                                 <MultiSelect
-                                    v-model="form.value.items"
+                                    v-model="form.value.attributeSet"
                                     :options="attributeSetOptions"
                                     optionLabel="title"
                                     optionValue="id"
@@ -439,7 +438,7 @@ export default defineComponent({
 
             console.log(validatorResponse);
 
-            if (!formIsValid.value || !form.items.length) {
+            if (!formIsValid.value) {
                 toast.add({
                     severity: "error",
                     summary: "Validation error",
